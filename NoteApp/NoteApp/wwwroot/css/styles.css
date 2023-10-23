@@ -10,34 +10,71 @@
     height: 100vh;
     min-width: 100vw;
     grid-template-columns: 30% auto;
-    grid-template-rows: 6% 13% auto;
+    grid-template-rows: 6% 5% 5% auto;
     grid-template-areas:
-        "header header"
-        "header1 header2"
+        "menu menu"
+        "top-header1 top-header2"
+        "bottom-header1 bottom-header2"
         "content1 content2";
 }
 
-.box-1 {
-    grid-area: header;
+.box-menu {
+    grid-area: menu;
     background-color: black;
+    display: flex;
+    align-items: center;
 }
 
-.box-2 {
-    grid-area: header1;
+.box-left-top-header {
+    grid-area: top-header1;
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    align-items: center;
+}
+
+.box-right-top-header {
+    grid-area: top-header2;
+    display: flex;
+    align-items: center;
+}
+
+.box-left-bottom-header {
+    grid-area: bottom-header1;
     background-color: rgb(230, 230, 230);
     border-bottom: 1px solid lightgray;
+    display: flex;
+    align-items: center;
 }
 
-.box-3 {
-    grid-area: header2;
+.box-right-bottom-header {
+    grid-area: bottom-header2;
     border-bottom: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.box-4 {
+.box-right-content {
     grid-area: content1;
     background-color: rgb(230, 230, 230);
 }
 
-.box-5 {
+.box-left-content {
     grid-area: content2;
+}
+
+.menu {
+    color: white;
+    display: inline;
+}
+
+p {
+    font-size: 15px;
+    margin: 20px 15px 15px 15px;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 20px 15px 15px 15px;
 }
