@@ -10,31 +10,34 @@
     height: 100vh;
     min-width: 100vw;
     grid-template-columns: 30% auto;
-    grid-template-rows: 10% auto;
-}
-
-[class^="box-"] {
-    
+    grid-template-rows: 6% 13% auto;
+    grid-template-areas:
+        "header header"
+        "header1 header2"
+        "content1 content2";
 }
 
 .box-1 {
-    background-color: rgb(230, 230, 230);
-    grid-row: 1;
-    grid-column: 1;
+    grid-area: header;
+    background-color: black;
 }
 
 .box-2 {
-    grid-row: 1;
-    grid-column: 2;
+    grid-area: header1;
+    background-color: rgb(230, 230, 230);
+    border-bottom: 1px solid lightgray;
 }
 
 .box-3 {
-    background-color: rgb(230, 230, 230);
-    grid-row: 2;
-    grid-column: 1;
+    grid-area: header2;
+    border-bottom: 1px solid lightgray;
 }
 
 .box-4 {
-    grid-row: 2;
-    grid-column: 2;
+    grid-area: content1;
+    background-color: rgb(230, 230, 230);
+}
+
+.box-5 {
+    grid-area: content2;
 }
