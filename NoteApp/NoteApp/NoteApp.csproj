@@ -6,4 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\Resources\add-icon.svg" />
+    <Content Remove="wwwroot\Resources\delete-icon.svg" />
+    <Content Remove="wwwroot\Resources\edit-icon.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Resources\add-icon.svg" />
+    <None Include="wwwroot\Resources\delete-icon.svg" />
+    <None Include="wwwroot\Resources\edit-icon.svg" />
+  </ItemGroup>
+
 </Project>
