@@ -18,4 +18,8 @@
     <None Include="wwwroot\Resources\edit-icon.svg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\About\" />
+  </ItemGroup>
+
 </Project>
