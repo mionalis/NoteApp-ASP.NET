@@ -51,7 +51,6 @@
     grid-row: 3;
     border-bottom: 1px solid lightgray;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     align-items: center;
 }
@@ -72,47 +71,49 @@
 .box-bottom-panel {
     grid-column: 1;
     grid-row: 5;
+    background-color: rgb(230, 230, 230);
+    border-top: 1px solid lightgray;
     display: flex;
     justify-content: left;
     align-items: center;
-    background-color: rgb(230, 230, 230);
-    border-top: 1px solid lightgray;
 }
 
 .icon {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     margin: 15px;
     display: block;
+}
+
+.menu {
+    color: white;
 }
 
 p {
     font-size: 15px;
     margin: 15px;
     white-space: nowrap;
+    display: inline;
 }
 
 h2 {
     font-size: 30px;
-    margin: 20px 15px 15px 15px;
+    margin: 15px;
+    margin-top: 20px;
 }
 
-.menu {
+/*a {
+    display: inline-block;
+    font-size: 15px;
+    margin: 15px;
     color: white;
-    display: inline;
-}
-
-p.box-right-bottom-header {
-    display: inline;
-}
-
-p.box-left-bottom-header {
-    white-space: nowrap;
-}
+    text-decoration: none;
+}*/
 
 select {
     font-size: 15px;
     width: 70%;
-    margin: 15px 15px 15px 0px;
+    margin: 15px;
+    border: 1px solid lightgray;
+    background-color: white;
 }
-
