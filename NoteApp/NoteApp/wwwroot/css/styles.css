@@ -83,6 +83,14 @@ h2 {
     margin: 20px 15px 15px 15px;
 }
 
+p.box-right-bottom-headerm {
+    display: inline
+}
+
+p.box-left-bottom-header {
+    white-space: nowrap
+}
+
 select {
     font-size: 15px;
     width: 70%;
