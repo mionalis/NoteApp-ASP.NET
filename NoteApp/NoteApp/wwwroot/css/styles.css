@@ -43,6 +43,7 @@
     background-color: rgb(230, 230, 230);
     border-bottom: 1px solid lightgray;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -55,12 +56,14 @@
     align-items: center;
 }
 
-.box-right-content {
+.box-left-content {
     grid-area: content1;
     background-color: rgb(230, 230, 230);
+    display: flex;
+    align-items: center;
 }
 
-.box-left-content {
+.box-right-content {
     grid-area: content2;
 }
 
@@ -71,10 +74,18 @@
 
 p {
     font-size: 15px;
-    margin: 20px 15px 15px 15px;
+    margin: 15px;
+    white-space: nowrap;
 }
 
 h2 {
     font-size: 30px;
     margin: 20px 15px 15px 15px;
 }
+
+select {
+    font-size: 15px;
+    width: 70%;
+    margin: 15px;
+}
+
