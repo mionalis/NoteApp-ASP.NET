@@ -6,41 +6,15 @@
 		<link rel="stylesheet" href="css/styles.css"/>
 		<title>@ViewData["Title"] - Note</title>
 	</head>
-	<body>
+<body>
+	<div class="main-container">
+		<header class="header">
+			<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+			<a asp-area="" asp-controller="About" asp-action="About">About</a>
+		</header>
 		<div class="container">
-			<div class="box-menu">
-				@* <p class="menu">Edit</p>
-				<p class="menu">About</p> *@
-					@* <a href="">Edit</a> *@
-					<a href="/about">About</a>
-			</div>
-			<div class="box-left-top-header">
-				<h2>Notes</h2>
-			</div>
-			<div class="box-left-bottom-header">
-			<p>Show Category:</p>
-				<select>
-					<option>Пункт 1</option>
-					<option>Пункт 2</option>
-				</select>
-			</div>
-			<div class="box-right-top-header">
-				<p>Category:</p>
-			</div>
-			<div class="box-right-bottom-header">
-			<p>Modified:</p>
-			<p>Created:</p>
-			</div>
-			<div class="box-right-content"></div>
-			<div class="box-left-content"></div>
-			<div class="box-bottom-panel">
-				<img class="icon" src="Resources/add-icon.svg"/>
-				<img class="icon" src="Resources/edit-icon.svg"/>
-				<img class="icon" src="Resources/delete-icon.svg"/>
-			</div>
-		</div>
-		<main>
 			@RenderBody()
-		</main>
-	</body>
+		</div>
+	</div>
+</body>
 </html>
