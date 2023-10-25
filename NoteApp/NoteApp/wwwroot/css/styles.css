@@ -10,32 +10,41 @@
     height: 100vh;
     min-width: 100vw;
     grid-template-columns: 1fr;
-    grid-template-rows: 6% auto;
+    grid-template-rows: minmax(40px, 6%) auto;
     grid-template-areas:
         'header'
         'main'
 }
 
-header {
-    grid-area: header;
-    background-color: black;
-    display: flex;
-    align-items: center;
-}
-
-a {
-    color: white;
-    font-size: 18px;
-    margin: 15px;
-    margin-right: 30px;
-    text-decoration: none;
-}
-
-.container {
+.home-container {
     grid-area: main;
     display: grid;
     grid-template-columns: minmax(250px, 30%) auto;
     grid-template-rows: minmax(40px, 7%) minmax(25px, 5%) auto minmax(45px, 7%);
+}
+
+.about-container {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(45px, 7%);
+    grid-template-areas:
+        'content'
+        'footer'
+}
+
+.about-content {
+    grid-area: content;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+}
+
+footer {
+    grid-area: footer;
+    font-size: 17px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
 }
 
 .box-left-top-header {
@@ -102,24 +111,47 @@ a {
     display: block;
 }
 
+#about {
+    color: black;
+    font-size: 17px;
+    margin-left: 5px;
+}
+
+#about:hover {
+    color: dodgerblue;
+}
+
+header {
+    grid-area: header;
+    background-color: black;
+    display: flex;
+    align-items: center;
+}
+
+select {
+    font-size: 17px;
+    width: 70%;
+    margin: 15px;
+    border: 1px solid lightgray;
+    background-color: white;
+}
+
+a {
+    color: white;
+    font-size: 17px;
+    margin: 15px;
+    margin-right: 30px;
+    text-decoration: none;
+}
+
 p {
-    font-size: 15px;
+    font-size: 17px;
     margin: 15px;
     white-space: nowrap;
-    display: inline;
 }
 
 h2 {
     font-size: 30px;
     margin: 15px;
     margin-top: 20px;
-}
-
-
-select {
-    font-size: 15px;
-    width: 70%;
-    margin: 15px;
-    border: 1px solid lightgray;
-    background-color: white;
 }
