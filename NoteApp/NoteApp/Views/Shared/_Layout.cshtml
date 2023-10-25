@@ -2,15 +2,17 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="css/styles.css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="css/styles.css" asp-append-version="true">
+		<base href="~/">
 		<title>@ViewData["Title"] - Note</title>
+		@await RenderSectionAsync("heads", required: false)
 	</head>
 <body>
 	<div class="main-container">
 		<header class="header">
 			<a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-			<a asp-area="" asp-controller="About" asp-action="About">About</a>
+			<a asp-area="" asp-controller="Home" asp-action="About">About</a>
 		</header>
 		<div class="container">
 			@RenderBody()
