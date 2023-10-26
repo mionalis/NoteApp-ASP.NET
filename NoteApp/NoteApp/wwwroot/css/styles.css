@@ -103,13 +103,6 @@ footer {
     align-items: center;
 }
 
-.icon {
-    width: 30px;
-    height: 30px;
-    margin: 15px;
-    display: block;
-}
-
 #about {
     color: black;
     font-size: 17px;
@@ -133,6 +126,23 @@ select {
     margin: 15px;
     border: 1px solid lightgray;
     background-color: white;
+}
+
+button {
+    background: transparent;
+    border: 0;
+    width: 40px;
+    height: 40px;
+    margin: 15px;
+    padding: 0px;
+}
+
+button:hover svg {
+    opacity: .5;
+}
+
+button:active svg {
+    opacity: .2;
 }
 
 a {
