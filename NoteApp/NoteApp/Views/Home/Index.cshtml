@@ -4,18 +4,7 @@
 
 <div class="index-page-container">
 
-	<div class="left-top-info-box">
-		<h2>Notes</h2>
-	</div>
-
-	<div class="left-bottom-info-box">
-		<p class="left-info-box-text">Show Category:</p>
-		<select>
-			<option>Пункт 1</option>
-			<option>Пункт 2</option>
-		</select>
-	</div>
-
+	@*
 	<div class="right-top-info-box">
 		<p>Category:</p>
 		<p class="note-info-text">Other</p>
@@ -30,8 +19,43 @@
 			<p>Created:</p>
 			<p class="note-info-text">20.10.2023</p>
 		</div>
+	</div> *@
+	
+	<div class="left-info-box">
+		<div class="left-top-info-box">
+			<h2>Notes</h2>
+		</div>
+
+		<div class="left-bottom-info-box">
+			<p class="left-info-box-text">Show Category:</p>
+			<select>
+				<option>Пункт 1</option>
+				<option>Пункт 2</option>
+			</select>
+		</div>
 	</div>
 	
+	<div class="right-info-box">
+		<div class="note-info-category">
+			<p class="note-info-header-text">Category:</p>
+		</div>
+		<div class="note-info-created">
+			<p class="note-info-header-text">Created:</p>
+		</div>
+		<div class="note-info-modified">
+			<p class="note-info-header-text">Modified:</p>
+		</div>
+		<div class="note-info-category-example">
+			<p class="note-info-example-text">Other</p>
+		</div>
+		<div class="note-info-created-example">
+			<p class="note-info-example-text">12.12.2012</p>
+		</div>
+		<div class="note-info-modified-example">
+			<p class="note-info-example-text">12.12.2012</p>
+		</div>
+	</div>
+
 	<div class="left-listbox">
 		@*Шаблон добавляемой заметки. В текущей ветке код ниже приведен для демонстрации верстки.*@
 		<div class="note-template">
