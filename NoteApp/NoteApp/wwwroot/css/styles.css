@@ -9,7 +9,7 @@
     height: 100vh;
     min-width: 100vw;
     grid-template-columns: auto;
-    grid-template-rows: 6% 94%;
+    grid-template-rows: minmax(35px, 6%) 94%;
     grid-template-areas:
         'header'
         'main'
@@ -18,8 +18,8 @@
 .home-container {
     grid-area: main;
     display: grid;
-    grid-template-columns: minmax(300px, 30%) auto;
-    grid-template-rows: minmax(40px, 7%) minmax(35px, 6%) 625px auto;
+    grid-template-columns: minmax(250px, 30%) auto;
+    grid-template-rows: minmax(40px, 7%) minmax(35px, 6%) 79% 8%;
 }
 
 .about-container {
