@@ -157,27 +157,6 @@ select {
     color: rgb(90, 90, 90);
 }
 
-/*.right-top-info-box {
-    align-items: center;
-    display: flex;
-    grid-area: rigth-top-info;
-}
-
-.rigth-bottom-info-box {
-    align-items: center;
-    border-bottom: 1px solid lightgray;
-    display: flex;
-    grid-area: rigth-bottom-info;
-    justify-content: space-between;
-}
-
-.right-info-box-text {
-    display: flex;
-}
-
-.note-info-text {
-    color: rgb(90, 90, 90);
-}*/
 .left-listbox {
     background-color: rgb(235, 235, 235);
     border-bottom: 1px solid rgb(192,192,192);
