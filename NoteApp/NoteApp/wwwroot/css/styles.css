@@ -55,13 +55,17 @@ select {
 .index-page-container {
     display: grid;
     grid-area: main;
+    grid-template-areas:
+        'left-top-info     rigth-top-info'
+        'left-bottom-info  rigth-bottom-info'
+        'listbox           content'
+        'panel             .';
     grid-template-columns: minmax(250px, 30%) auto;
     grid-template-rows: minmax(40px, 7%) minmax(35px, 6%) 79% 8%;
 }
 
 .left-top-info-box {
-    grid-column: 1;
-    grid-row: 1;
+    grid-area: left-top-info;
     background-color: rgb(235, 235, 235);
     border-right: 1px solid rgb(192,192,192);
     display: flex;
@@ -74,8 +78,7 @@ select {
     border-bottom: 1px solid rgb(192,192,192);
     border-right: 1px solid rgb(192,192,192);
     display: flex;
-    grid-column: 1;
-    grid-row: 2;
+    grid-area: left-bottom-info;
     justify-content: space-between;
 }
 
@@ -86,16 +89,14 @@ select {
 .right-top-info-box {
     align-items: center;
     display: flex;
-    grid-column: 2;
-    grid-row: 1;
+    grid-area: rigth-top-info;
 }
 
 .rigth-bottom-info-box {
     align-items: center;
     border-bottom: 1px solid lightgray;
     display: flex;
-    grid-column: 2;
-    grid-row: 2;
+    grid-area: rigth-bottom-info;
     justify-content: space-between;
 }
 
@@ -112,8 +113,7 @@ select {
     border-bottom: 1px solid rgb(192,192,192);
     border-right: 1px solid rgb(192, 192, 192);
     display: flex;
-    grid-column: 1;
-    grid-row: 3;
+    grid-area: listbox;
     flex-direction: column;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -151,8 +151,7 @@ select {
 
 .right-content-box {
     border-bottom: 1px solid rgb(192,192,192);
-    grid-column: 2;
-    grid-row: 3;
+    grid-area: content;
     overflow-y: auto;
     scrollbar-width: thin;
 }
@@ -166,8 +165,7 @@ select {
     background-color: rgb(235, 235, 235);
     border-right: 1px solid rgb(192,192,192);
     display: flex;
-    grid-column: 1;
-    grid-row: 4;
+    grid-area: panel;
     justify-content: left;
 }
 
