@@ -13,7 +13,7 @@
 		{
 		}
 
-		public string Title { get; set; }
+		public string Title { get; set; } = "Без названия";
 
 		public string Content { get; set; }
 

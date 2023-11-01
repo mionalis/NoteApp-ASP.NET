@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoteApp.Models;
 using System.Diagnostics;
+using System.Security.Principal;
 
 namespace NoteApp.Controllers
 {
@@ -13,14 +14,21 @@ namespace NoteApp.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+		public IActionResult Index()
         {
-            return View();
+            var note = new Note();
+	        return View(note);
         }
 
         public IActionResult About()
         {
 	        return View();
+        }
+
+        [HttpGet]
+        public ActionResult AddNote()
+        {
+	        return Empty;
         }
 	}
 }
