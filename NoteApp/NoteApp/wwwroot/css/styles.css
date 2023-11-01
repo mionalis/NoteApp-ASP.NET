@@ -61,7 +61,7 @@ select {
     grid-template-areas:
         'left-info         right-info'
         'listbox           content'
-        'panel             .';
+        'panel             edit-panel';
     grid-template-columns: minmax(250px, 30%) minmax(400px, auto);
     grid-template-rows: minmax(75px, 13%) 79% 8%;
 }
@@ -241,7 +241,7 @@ select {
     line-height: 1.5;
 }
 
-.bottom-panel {
+.left-bottom-panel {
     align-items: center;
     background-color: rgb(235, 235, 235);
     border-right: 1px solid rgb(192,192,192);
@@ -250,7 +250,7 @@ select {
     justify-content: left;
 }
 
-.bottom-panel-button {
+.left-bottom-panel-button {
     align-items: center;
     background: transparent;
     border: 0;
@@ -261,12 +261,30 @@ select {
     width: 35px;
 }
 
-.bottom-panel-button:hover svg {
+.left-bottom-panel-button:hover svg {
     opacity: 0.5;
 }
 
-.bottom-panel-button:active svg {
+.left-bottom-panel-button:active svg {
     opacity: 0.2;
+}
+
+.right-bottom-panel {
+    align-items: center;
+    display: flex;
+    grid-area: edit-panel;
+    justify-content: left;
+}
+
+.right-bottom-panel-button {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    display: flex;
+    height: 35px;
+    margin: 15px;
+    padding: 0px;
+    width: 35px;
 }
 
 .about-page-container {
