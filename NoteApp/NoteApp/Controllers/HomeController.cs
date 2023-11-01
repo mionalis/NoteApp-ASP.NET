@@ -14,21 +14,25 @@ namespace NoteApp.Controllers
             _logger = logger;
         }
 
-		public IActionResult Index()
+        public static bool IsEditing { get; set; }
+
+        public IActionResult Index()
         {
-            var note = new Note();
+	        var note = new Note();
+
 	        return View(note);
         }
 
-        public IActionResult About()
+		public IActionResult About()
         {
 	        return View();
         }
 
-        [HttpGet]
-        public ActionResult AddNote()
+        public IActionResult EditMode()
         {
-	        return Empty;
+	        IsEditing = !IsEditing;
+
+	        return RedirectToAction("Index");
         }
 	}
 }
