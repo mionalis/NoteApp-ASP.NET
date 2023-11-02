@@ -18,7 +18,7 @@ namespace NoteApp.Controllers
 
         public IActionResult Index()
         {
-	        return View();
+	        return View(new Note());
         }
 
 		public IActionResult About()
@@ -26,11 +26,35 @@ namespace NoteApp.Controllers
 	        return View();
         }
 
-        public IActionResult EditMode()
+        public IActionResult AddNote()
         {
-	        IsEditing = !IsEditing;
+	        IsEditing = true;
 
-	        return View("Index");
+	        return View("Index", new Note());
         }
+
+        public IActionResult EditNote()
+        {
+	        IsEditing = true;
+
+	        return View("Index", new Note());
+        }
+
+        public IActionResult DeleteNote()
+        {
+	        return View("Index", new Note());
+		}
+
+        public IActionResult AcceptChanges()
+        {
+	        IsEditing = false;
+			return View("Index", new Note());
+        }
+
+        public IActionResult CancelChanges()
+        {
+	        IsEditing = false;
+			return View("Index", new Note());
+		}
 	}
 }
