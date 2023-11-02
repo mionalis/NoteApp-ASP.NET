@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoteApp.Models;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace NoteApp.Controllers
 {
@@ -16,45 +19,65 @@ namespace NoteApp.Controllers
 
         public static bool IsEditing { get; set; }
 
-        public IActionResult Index()
+        private List<Note> _noteList { get; set; } = new();
+
+        private NoteViewModel _noteViewModel { get; set; } = new();
+
+		public IActionResult Index()
         {
-	        return View(new Note());
+	        var citiesSelectListItems = new List<SelectListItem>();
+
+	        foreach (var note in _noteList)
+	        {
+		        var selectList = new SelectListItem()
+		        { 
+			        Text = note.Title,
+			        Value = note.Id.ToString(),
+			        Selected = note.IsSelected
+		        };
+
+		        citiesSelectListItems.Add(selectList);
+	        }
+
+			_noteViewModel.Notes = citiesSelectListItems;
+
+	        return View(_noteViewModel);
         }
 
 		public IActionResult About()
-        {
-	        return View();
-        }
+		{
+			return View();
+		}
 
-        public IActionResult AddNote()
+		public IActionResult AddNote()
         {
 	        IsEditing = true;
 
-	        return View("Index", new Note());
+	        return View("Index");
         }
 
         public IActionResult EditNote()
         {
 	        IsEditing = true;
 
-	        return View("Index", new Note());
+	        return View("Index");
         }
 
         public IActionResult DeleteNote()
         {
-	        return View("Index", new Note());
+	        return View("Index");
 		}
 
         public IActionResult AcceptChanges()
         {
 	        IsEditing = false;
-			return View("Index", new Note());
+			return View("Index");
         }
 
         public IActionResult CancelChanges()
         {
 	        IsEditing = false;
-			return View("Index", new Note());
+			return View("Index");
 		}
 	}
 }
