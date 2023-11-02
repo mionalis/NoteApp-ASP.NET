@@ -18,9 +18,7 @@ namespace NoteApp.Controllers
 
         public IActionResult Index()
         {
-	        var note = new Note();
-
-	        return View(note);
+	        return View();
         }
 
 		public IActionResult About()
@@ -32,7 +30,7 @@ namespace NoteApp.Controllers
         {
 	        IsEditing = !IsEditing;
 
-	        return RedirectToAction("Index");
+	        return View("Index");
         }
 	}
 }
