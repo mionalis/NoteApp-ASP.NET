@@ -32,23 +32,7 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult Index()
         {
-	        var citiesSelectListItems = new List<SelectListItem>();
-
-	        foreach (var note in _noteList)
-	        {
-		        var selectList = new SelectListItem()
-		        { 
-			        Text = note.Title,
-			        Value = note.Id.ToString(),
-			        Selected = note.IsSelected
-		        };
-
-		        citiesSelectListItems.Add(selectList);
-		        _noteViewModel.Ids.Add(note.Id);
-		        _noteViewModel.CurrentNote = note;
-	        }
-
-			_noteViewModel.Notes = citiesSelectListItems;
+	        _noteViewModel.ListBoxNotes = GetNotesForListBox();
 
 	        return View(_noteViewModel);
 
@@ -66,23 +50,7 @@ namespace NoteApp.Controllers
 			var newNote = new Note();
 			_noteList.Add(newNote);
 
-			var citiesSelectListItems = new List<SelectListItem>();
-
-			foreach (var note in _noteList)
-			{
-				var selectList = new SelectListItem()
-				{
-					Text = note.Title,
-					Value = note.Id.ToString(),
-					Selected = note.IsSelected
-				};
-
-				citiesSelectListItems.Add(selectList);
-				_noteViewModel.Ids.Add(note.Id);
-				_noteViewModel.CurrentNote = note;
-			}
-
-			_noteViewModel.Notes = citiesSelectListItems;
+			_noteViewModel.ListBoxNotes = GetNotesForListBox();
 
 			return View("Index", _noteViewModel);
         }
@@ -110,5 +78,25 @@ namespace NoteApp.Controllers
 	        IsEditing = false;
 			return View("Index");
 		}
+
+        private List<SelectListItem> GetNotesForListBox()
+        {
+	        var notesSelectListItems = new List<SelectListItem>();
+
+	        foreach (var note in _noteList)
+	        {
+		        var selectList = new SelectListItem()
+		        {
+			        Text = note.Title,
+			        Value = note.Id.ToString(),
+			        Selected = note.IsSelected
+		        };
+
+		        notesSelectListItems.Add(selectList);
+		        _noteViewModel.CurrentNote = note;
+	        }
+
+	        return notesSelectListItems;
+        }
 	}
 }

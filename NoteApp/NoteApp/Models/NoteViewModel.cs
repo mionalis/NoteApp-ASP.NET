@@ -6,8 +6,8 @@ namespace NoteApp.Models
 	{
 		public Note CurrentNote { get; set; }
 
-		public IEnumerable<int>? SelectedNotes { get; set; }
+		public IEnumerable<int>? ListBoxNotesID { get; set; }
 
-		public IEnumerable<SelectListItem>? Notes { get; set; }
+		public IEnumerable<SelectListItem>? ListBoxNotes { get; set; }
 	}
 }
