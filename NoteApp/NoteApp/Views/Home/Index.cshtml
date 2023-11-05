@@ -73,10 +73,10 @@
 			<p class="note-info-example-text">12.12.2012</p>
 		</div>
 	</div>
-	<div class="left-listbox">
-		<select asp-for="Title" name="NotesListBox" asp-items="Model.NotesSelectListItems" multiple>
-		</select>
-	</div>
+
+	<select asp-for="Title" name="NotesListBox" asp-items="Model.NotesSelectListItems" multiple class="left-listbox">
+	</select>
+
 	<div class="left-bottom-panel">
 		<button type="submit" class="left-bottom-panel-button">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
