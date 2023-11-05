@@ -44,7 +44,7 @@ namespace NoteApp.Controllers
 				citiesSelectListItems.Add(selectList);
 			}
 
-			_noteViewModel.NoteSelectListItems = citiesSelectListItems;
+			_noteViewModel.NotesSelectListItems = citiesSelectListItems;
 
 			return View(_noteViewModel);
 		}
@@ -52,7 +52,22 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult Index(NoteViewModel noteViewModel)
 		{
+			var citiesSelectListItems = new List<SelectListItem>();
+
+			foreach (var note in _noteList)
+			{
+				var selectList = new SelectListItem()
+				{
+					Text = note.Title,
+					Value = note.Content
+				};
+				citiesSelectListItems.Add(selectList);
+			}
+
 			var test = _noteList.FirstOrDefault(c => c.Content == noteViewModel.Title);
+			_noteViewModel.CurrentNote = test;
+
+			_noteViewModel.NotesSelectListItems = citiesSelectListItems;
 			return View(_noteViewModel);
 		}
 

@@ -14,7 +14,7 @@ namespace NoteApp.Models
 		{
 		}
 
-		[BindProperty(Name = "Aaa")]
+		[BindProperty(Name = "NotesListBox")]
 		public string Title
 		{
 			get => Note.Title;
@@ -27,10 +27,10 @@ namespace NoteApp.Models
 			set => Note.Content = value;
 		}
 
-		public Note Note { get; set; } = new Note();
+		public Note Note { get; set; } = new();
 
 		public NoteViewModel CurrentNote { get; set; }
 
-		public List<SelectListItem> NoteSelectListItems { get; set; } = new();
+		public List<SelectListItem> NotesSelectListItems { get; set; } = new();
 	}
 }
