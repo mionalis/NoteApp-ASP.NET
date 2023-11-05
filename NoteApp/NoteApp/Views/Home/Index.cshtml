@@ -75,43 +75,45 @@
 		</div>
 	</div>
 
-	<div class="left-listbox">
-		@Html.ListBoxFor(m => m.ListBoxNotesID, Model.ListBoxNotes)
-	</div>
-
-	<div class="left-bottom-panel">
-		<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("AddNote")'">
-			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M15 12H12M12 12H9M12 12V9M12 12V15M17 21H7C4.79086 21 3 19.2091 3 17V7C3 
+	<form method="post">
+		<div class="left-listbox">
+			<select asp-for="Title" name="Aaa" asp-items="Model.NoteSelectListItems" multiple>
+			</select>
+		</div>
+		<div class="left-bottom-panel">
+			<button type="submit" class="left-bottom-panel-button" @* onclick="location.href='@Url.Action("AddNote")' *@">
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M15 12H12M12 12H9M12 12V9M12 12V15M17 21H7C4.79086 21 3 19.2091 3 17V7C3 
 						4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091 19.2091
 						21 17 21Z"
-				      stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-			</svg>
-		</button>
-		<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("EditNote")'">
-			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091
+					      stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+				</svg>
+			</button>
+			<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("EditNote")'">
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091
 						 19.2091 21 17 21H7C4.79086 21 3 19.2091 3 17V7Z" stroke="#000000" stroke-width="2"/>
-				<path d="M16.2739 11.1377C16.6644 10.7472 16.6644 10.114 16.2739 9.7235L14.4823 
+					<path d="M16.2739 11.1377C16.6644 10.7472 16.6644 10.114 16.2739 9.7235L14.4823 
 						 7.9319C14.0918 7.54137 13.4586 7.54138 13.0681 7.9319L8.96106 
 						 12.0389L8.34768 15.7477C8.3365 15.8154 8.39516 15.874 8.4628 
-						 15.8627L12.1669 15.2448L16.2739 11.1377Z" 
-				      stroke="#000000" stroke-width="2"/>
-			</svg>
-		</button>
-		<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("DeleteNote")'">
-			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8
+						 15.8627L12.1669 15.2448L16.2739 11.1377Z"
+					      stroke="#000000" stroke-width="2"/>
+				</svg>
+			</button>
+			<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("DeleteNote")'">
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8
 						 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21
 						 16.1479 21H7.85206C6.80699 21 5.93811 20.1954 5.85795 19.1534L5.16565 
 						 10.1534Z"
-				      stroke="#000000" stroke-width="2"/>
-				<path d="M19.5 5H4.5" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-				<path d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z"
-				      stroke="#000000" stroke-width="2"/>
-				<path d="M14 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-				<path d="M10 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
-			</svg>
-		</button>
-	</div>
+					      stroke="#000000" stroke-width="2"/>
+					<path d="M19.5 5H4.5" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+					<path d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z"
+					      stroke="#000000" stroke-width="2"/>
+					<path d="M14 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+					<path d="M10 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+				</svg>
+			</button>
+		</div>
+	</form>
 </div>

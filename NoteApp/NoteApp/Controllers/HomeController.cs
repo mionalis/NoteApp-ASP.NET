@@ -20,22 +20,40 @@ namespace NoteApp.Controllers
 		public static bool IsEditing { get; set; }
 
 		// Для тестирования
-		private List<Note>	_noteList = new()
+		private List<NoteViewModel>	_noteList = new()
 		{
-			new Note() { Id = 1, Title = "A", IsSelected = false },
-			new Note() { Id = 2, Title = "B", IsSelected = false },
-			new Note() { Id = 3, Title = "C", IsSelected = false },
+			new NoteViewModel() { Title = "A", Content = "ldldld" },
+			new NoteViewModel() { Title = "B", Content = "bbfdb" },
+			new NoteViewModel() { Title = "C", Content = "tetette" }
 		};
 
 		private NoteViewModel _noteViewModel { get; set; } = new();
 
 		[HttpGet]
 		public IActionResult Index()
-        {
-	        _noteViewModel.ListBoxNotes = GetNotesForListBox();
+		{
+			var citiesSelectListItems = new List<SelectListItem>();
 
-	        return View(_noteViewModel);
+			foreach (var note in _noteList)
+			{
+				var selectList = new SelectListItem()
+				{
+					Text = note.Title,
+					Value = note.Content
+				};
+				citiesSelectListItems.Add(selectList);
+			}
 
+			_noteViewModel.NoteSelectListItems = citiesSelectListItems;
+
+			return View(_noteViewModel);
+		}
+
+		[HttpPost]
+		public IActionResult Index(NoteViewModel noteViewModel)
+		{
+			var test = _noteList.FirstOrDefault(c => c.Content == noteViewModel.Title);
+			return View(_noteViewModel);
 		}
 
 		public IActionResult About()
@@ -47,12 +65,7 @@ namespace NoteApp.Controllers
         {
 	        IsEditing = true;
 
-			var newNote = new Note();
-			_noteList.Add(newNote);
-
-			_noteViewModel.ListBoxNotes = GetNotesForListBox();
-
-			return View("Index", _noteViewModel);
+	        return View("Index");
         }
 
         public IActionResult EditNote()
@@ -88,12 +101,10 @@ namespace NoteApp.Controllers
 		        var selectList = new SelectListItem()
 		        {
 			        Text = note.Title,
-			        Value = note.Id.ToString(),
-			        Selected = note.IsSelected
+			        Value = note.Content
 		        };
 
 		        notesSelectListItems.Add(selectList);
-		        _noteViewModel.CurrentNote = note;
 	        }
 
 	        return notesSelectListItems;
