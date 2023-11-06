@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace NoteApp.Controllers
 {
@@ -19,20 +20,14 @@ namespace NoteApp.Controllers
 
 		public static bool IsEditing { get; set; }
 
-		// Для тестирования
-		private List<NoteViewModel>	_noteList = new()
-		{
-			new NoteViewModel() { Title = "A", Content = "ldldld" },
-			new NoteViewModel() { Title = "B", Content = "bbfdb" },
-			new NoteViewModel() { Title = "C", Content = "tetette" }
-		};
-
 		private NoteViewModel _noteViewModel { get; set; } = new();
+
+		private List<SelectListItem> _notesSelectListItems { get; set; } = new();
 
 		[HttpGet]
 		public IActionResult Index()
 		{
-			_noteViewModel.NotesSelectListItems = GetNotesForListBox();
+			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
 
 			return View(_noteViewModel);
 		}
@@ -40,10 +35,10 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult Index(NoteViewModel noteViewModel)
 		{
-			var test = _noteList.FirstOrDefault(c => c.Content == noteViewModel.Title);
-			_noteViewModel.CurrentNote = test;
+			var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(c => c.Content == noteViewModel.Title);
+			_noteViewModel.CurrentNote = selectedNote;
 
-			_noteViewModel.NotesSelectListItems = GetNotesForListBox();
+			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
 			return View(_noteViewModel);
 		}
 
@@ -56,7 +51,11 @@ namespace NoteApp.Controllers
         {
 	        IsEditing = true;
 
-	        return View("Index");
+	        var note = new NoteViewModel();
+	        _noteViewModel.NoteViewModelList.Add(note);
+
+			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			return View("Index", _noteViewModel);
         }
 
         public IActionResult EditNote()
@@ -71,10 +70,16 @@ namespace NoteApp.Controllers
 	        return View("Index");
 		}
 
-        public IActionResult AcceptChanges()
+		[HttpPost]
+        public IActionResult AcceptChanges(NoteViewModel noteViewModel)
         {
 	        IsEditing = false;
-			return View("Index");
+
+	        _noteViewModel.NoteViewModelList.Add(noteViewModel);
+	        _noteViewModel.CurrentNote = noteViewModel;
+
+	        _noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			return View("Index", _noteViewModel);
         }
 
         public IActionResult CancelChanges()
@@ -83,16 +88,17 @@ namespace NoteApp.Controllers
 			return View("Index");
 		}
 
-        private List<SelectListItem> GetNotesForListBox()
+        private List<SelectListItem> GetNotesSelectListItems()
         {
 	        var notesSelectListItems = new List<SelectListItem>();
 
-	        foreach (var note in _noteList)
+	        foreach (var note in _noteViewModel.NoteViewModelList)
 	        {
 		        var selectList = new SelectListItem()
 		        {
 			        Text = note.Title,
-			        Value = note.Content
+			        Value = note.Content,
+					Selected = false
 		        };
 
 		        notesSelectListItems.Add(selectList);
