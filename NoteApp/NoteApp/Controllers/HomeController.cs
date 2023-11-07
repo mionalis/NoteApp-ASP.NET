@@ -20,11 +20,10 @@ namespace NoteApp.Controllers
 
 		private NoteViewModel _noteViewModel { get; set; } = new();
 
-		private List<SelectListItem> _notesSelectListItems { get; set; } = new();
-
 		[HttpGet]
 		public IActionResult Index()
 		{
+			InitializeNoteListForTesting();
 			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
 
 			return View(_noteViewModel);
@@ -33,7 +32,8 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult Index(NoteViewModel noteViewModel)
 		{
-			var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(c => c.Content == noteViewModel.Title);
+			InitializeNoteListForTesting();
+			var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(c => c.Title == noteViewModel.Title);
 			_noteViewModel.CurrentNote = selectedNote;
 
 			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
@@ -52,19 +52,24 @@ namespace NoteApp.Controllers
         }
 
 		[HttpPost]
-		public IActionResult AddNote(NoteViewModel note)
+		public IActionResult AddNote(NoteViewModel noteViewModel)
 		{
-			_noteViewModel.NoteViewModelList.Add(note);
 			return RedirectToAction("Index");
 		}
 
+		[HttpGet]
 		public IActionResult EditNote()
-        {
+		{
+			return View();
+		}
 
-	        return View("Index");
-        }
+		[HttpPost]
+		public IActionResult EditNote(NoteViewModel noteViewModel)
+		{
+			return RedirectToAction("Index");
+		}
 
-        public IActionResult DeleteNote()
+		public IActionResult DeleteNote()
         {
 	        return View("Index");
 		}
@@ -89,7 +94,7 @@ namespace NoteApp.Controllers
 		        var selectList = new SelectListItem()
 		        {
 			        Text = note.Title,
-			        Value = note.Content,
+			        Value = note.Title,
 					Selected = false
 		        };
 
@@ -97,6 +102,17 @@ namespace NoteApp.Controllers
 	        }
 
 			return notesSelectListItems;
+        }
+
+        private void InitializeNoteListForTesting()
+        {
+	        _noteViewModel.NoteViewModelList = new List<NoteViewModel>()
+	        {
+		        new NoteViewModel() { Title = "Note1", Content = "Content" },
+		        new NoteViewModel() { Title = "Note2", Content = "Content" },
+		        new NoteViewModel() { Title = "Note3", Content = "Content" }
+			};
+
         }
 	}
 }

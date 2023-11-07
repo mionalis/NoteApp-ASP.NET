@@ -21,23 +21,17 @@ namespace NoteApp.Models
 			set => Note.Title = value;
 		}
 
+		[BindProperty(Name = "NotesListBox")]
 		public string Content
 		{
 			get => Note.Content;
 			set => Note.Content = value;
 		}
 
-		public bool IsSelected
-		{
-			get => Note.IsSelected;
-			set => Note.IsSelected = value;
-		}
-
 		public Note Note { get; set; } = new();
 
 		public NoteViewModel CurrentNote { get; set; }
 
-		// Для тестирования
 		public List<NoteViewModel> NoteViewModelList = new();
 
 		public List<SelectListItem> NotesSelectListItems { get; set; } = new();

@@ -4,47 +4,14 @@
     ViewData["Title"] = "Home";
 }
 
-<div @*  method="post" *@ class="index-page-container">
-	@* 	@if(HomeController.IsEditing)
-	{
-		<div class="right-enter-content-box"> 
-			<input asp-for="CurrentNote.Title" class="title-input" type="text" name="title" />
-			<textarea asp-for="CurrentNote.Title" type="text" class="content-textarea" 
-				oninput='this.style.height = ""; this.style.height = this.scrollHeight + 
-				"px"'>@Model.CurrentNote.Title</textarea>
-		</div>
+<form method="post" class="index-page-container">
 
-		<div class="right-bottom-panel">
-			<button class="right-bottom-panel-button" asp-controller="Home"
-			        asp-action="AcceptChanges">
-				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M6 12L10.2426 16.2426L18.727 7.75732" stroke="#000000"
-					      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-			</button>
-			<button class="right-bottom-panel-button" 
-			        onclick="location.href='@Url.Action("CancelChanges")'">
-				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path id="Vector" d="M16 16L12 12M12 12L8 8M12 12L16 8M12 12L8 16" 
-					      stroke="#000000" stroke-width="2" stroke-linecap="round" 
-					      stroke-linejoin="round"/>
-				</svg>
-			</button>
-		</div>
-	}
-	else
-	{
-		<div class="right-read-content-box">
-			<input asp-for="CurrentNote.Title" class="title-input" type="text" name="title" readonly />
-			<p class="note-content-text">
-		</div>
-	} *@
-	
 	<div class="right-read-content-box">
-		<input asp-for="CurrentNote.Title" class="title-input" type="text" name="title" readonly />
-		<p class="note-content-text">
+		<input asp-for="CurrentNote.Title" class="title-input" type="text" name="title" readonly/>
+		<textarea asp-for="CurrentNote.Content" type="text" class="content-textarea" oninput='this.style.height = "";
+			this.style.height = this.scrollHeight + "px"'></textarea>
 	</div>
-	
+
 	<div class="left-info-box">
 		<div class="left-top-info-box">
 			<h2>ListBoxNotes</h2>
@@ -58,7 +25,7 @@
 			</select>
 		</div>
 	</div>
-	
+
 	<div class="right-info-box">
 		<div class="note-info-category">
 			<p class="note-info-header-text">Category:</p>
@@ -84,7 +51,7 @@
 	        multiple class="left-listbox"></select>
 
 	<div class="left-bottom-panel">
-		<button type="submit" class="left-bottom-panel-button">
+		<button type="submit" asp-controller="Home" asp-action="Index" class="left-bottom-panel-button">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 
 						 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007
@@ -104,7 +71,7 @@
 				      stroke="#000000" stroke-width="2" stroke-linecap="round"/>
 			</svg>
 		</a>
-		<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("EditNote")'">
+		<a class="left-bottom-panel-button" asp-controller="Home" asp-action="EditNote" asp-route-id="@Model.Title">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091
 						 19.2091 21 17 21H7C4.79086 21 3 19.2091 3 17V7Z" stroke="#000000" stroke-width="2"/>
@@ -114,7 +81,7 @@
 						 15.8627L12.1669 15.2448L16.2739 11.1377Z"
 				      stroke="#000000" stroke-width="2"/>
 			</svg>
-		</button>
+		</a>
 		<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("DeleteNote")'">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8
@@ -130,4 +97,4 @@
 			</svg>
 		</button>
 	</div>
-</div>
+</form>

@@ -1,0 +1,17 @@
+﻿@model NoteApp.Models.NoteViewModel
+
+<div>
+	<h1>Edit Contact</h1>
+
+	<form asp-controller="Home" asp-action="EditNote" class="form-horizontal" role="form">
+		
+		@Html.Partial("NoteTextBoxes", Model)
+
+		<div class="">
+			<div class="">
+				<button type="submit" class="">Save Contact</button>
+				<a class="" asp-controller="Home" asp-action="Index">Cancel</a>
+			</div>
+		</div>
+	</form>
+</div>
