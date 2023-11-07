@@ -1,5 +1,4 @@
-﻿@using NoteApp.Controllers
-@model NoteApp.Models.NoteViewModel
+﻿@model NoteApp.Models.NoteViewModel
 @{
     ViewData["Title"] = "Home";
 }
@@ -71,7 +70,7 @@
 				      stroke="#000000" stroke-width="2" stroke-linecap="round"/>
 			</svg>
 		</a>
-		<a class="left-bottom-panel-button" asp-controller="Home" asp-action="EditNote" asp-route-id="@Model.Title">
+		<a class="left-bottom-panel-button" asp-controller="Home" asp-action="EditNote">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091
 						 19.2091 21 17 21H7C4.79086 21 3 19.2091 3 17V7Z" stroke="#000000" stroke-width="2"/>
@@ -82,7 +81,7 @@
 				      stroke="#000000" stroke-width="2"/>
 			</svg>
 		</a>
-		<button class="left-bottom-panel-button" onclick="location.href='@Url.Action("DeleteNote")'">
+		<a class="left-bottom-panel-button" asp-controller="Home" asp-action="DeleteNote">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8
 						 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21
@@ -95,6 +94,6 @@
 				<path d="M14 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
 				<path d="M10 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
 			</svg>
-		</button>
+		</a>
 	</div>
 </form>

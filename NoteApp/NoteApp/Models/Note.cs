@@ -13,15 +13,11 @@
 		{
 		}
 
-		public int Id { get; set; }
-
 		public string Title { get; set; } = "Без названия";
 
 		public string Content { get; set; }
 
 		public NoteCategory Category { get; set; }
-
-		public bool IsSelected { get; set; }
 
 		public DateTime CreationTime { get; private set; }
 

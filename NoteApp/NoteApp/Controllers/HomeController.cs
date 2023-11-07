@@ -33,7 +33,10 @@ namespace NoteApp.Controllers
 		public IActionResult Index(NoteViewModel noteViewModel)
 		{
 			InitializeNoteListForTesting();
-			var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(c => c.Title == noteViewModel.Title);
+
+			var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(
+				c => c.Title == noteViewModel.Title);
+
 			_noteViewModel.CurrentNote = selectedNote;
 
 			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
@@ -58,34 +61,48 @@ namespace NoteApp.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult EditNote()
+		public IActionResult EditNote(NoteViewModel noteViewModel)
 		{
-			return View();
+			var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(
+				c => c.Title == noteViewModel.Title);
+
+			if (selectedNote == null)
+			{
+				return NotFound();
+			}
+
+			return View(selectedNote);
 		}
 
 		[HttpPost]
-		public IActionResult EditNote(NoteViewModel noteViewModel)
+		public IActionResult AcceptModifiedNote(NoteViewModel noteViewModel)
 		{
 			return RedirectToAction("Index");
 		}
 
-		public IActionResult DeleteNote()
-        {
-	        return View("Index");
+		[HttpGet]
+		public IActionResult DeleteNote(NoteViewModel noteViewModel)
+		{
+			/*var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(
+		        c => c.Title == noteViewModel.Title);*/
+
+			var selectedNote = new NoteViewModel();
+
+			if (selectedNote == null)
+			{
+				return NotFound();
+			}
+
+			return View(selectedNote);
 		}
 
 		[HttpPost]
-        public IActionResult AcceptChanges()
-        {
-			return View("Index");
+		public IActionResult AcceptNoteDeletion(NoteViewModel noteViewModel)
+		{
+			return RedirectToAction("Index");
 		}
 
-        public IActionResult CancelChanges()
-        {
-			return View("Index");
-		}
-
-        private List<SelectListItem> GetNotesSelectListItems()
+		private List<SelectListItem> GetNotesSelectListItems()
         {
 	        var notesSelectListItems = new List<SelectListItem>();
 
@@ -108,11 +125,10 @@ namespace NoteApp.Controllers
         {
 	        _noteViewModel.NoteViewModelList = new List<NoteViewModel>()
 	        {
-		        new NoteViewModel() { Title = "Note1", Content = "Content" },
-		        new NoteViewModel() { Title = "Note2", Content = "Content" },
-		        new NoteViewModel() { Title = "Note3", Content = "Content" }
+		        new() { Title = "Note1", Content = "Content" },
+		        new() { Title = "Note2", Content = "Content" },
+		        new() { Title = "Note3", Content = "Content" }
 			};
-
         }
 	}
 }
