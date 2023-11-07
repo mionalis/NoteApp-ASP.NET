@@ -1,0 +1,15 @@
+﻿@model NoteApp.Models.NoteViewModel
+
+<h1>Add a new Contact</h1>
+
+<form asp-controller="Home" asp-action="AddNote" class="" role="form">
+
+	@await Html.PartialAsync("NoteTextBoxes", Model)
+
+	<div class="form-group">
+		<div>
+			<button type="submit" class="">Add Contact</button>
+		@* 	<a class="btn btn-default" asp-controller="Contacts" asp-action="Index">Cancel</a> *@
+		</div>
+	</div>
+</form>

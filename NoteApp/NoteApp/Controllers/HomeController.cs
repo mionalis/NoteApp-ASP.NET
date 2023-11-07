@@ -18,8 +18,6 @@ namespace NoteApp.Controllers
 			_logger = logger;
 		}
 
-		public static bool IsEditing { get; set; }
-
 		private NoteViewModel _noteViewModel { get; set; } = new();
 
 		private List<SelectListItem> _notesSelectListItems { get; set; } = new();
@@ -47,20 +45,21 @@ namespace NoteApp.Controllers
 			return View();
 		}
 
+		[HttpGet]
 		public IActionResult AddNote()
         {
-	        IsEditing = true;
-
-	        var note = new NoteViewModel();
-	        _noteViewModel.NoteViewModelList.Add(note);
-
-			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
-			return View("Index", _noteViewModel);
+	        return View();
         }
 
-        public IActionResult EditNote()
+		[HttpPost]
+		public IActionResult AddNote(NoteViewModel note)
+		{
+			_noteViewModel.NoteViewModelList.Add(note);
+			return RedirectToAction("Index");
+		}
+
+		public IActionResult EditNote()
         {
-	        IsEditing = true;
 
 	        return View("Index");
         }
@@ -71,20 +70,13 @@ namespace NoteApp.Controllers
 		}
 
 		[HttpPost]
-        public IActionResult AcceptChanges(NoteViewModel noteViewModel)
+        public IActionResult AcceptChanges()
         {
-	        IsEditing = false;
-
-	        _noteViewModel.NoteViewModelList.Add(noteViewModel);
-	        _noteViewModel.CurrentNote = noteViewModel;
-
-	        _noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
-			return View("Index", _noteViewModel);
-        }
+			return View("Index");
+		}
 
         public IActionResult CancelChanges()
         {
-	        IsEditing = false;
 			return View("Index");
 		}
 
