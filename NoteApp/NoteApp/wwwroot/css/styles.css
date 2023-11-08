@@ -313,3 +313,21 @@ a:hover {
     display: flex;
     justify-content: left;
 }
+
+.note-deletion-box {
+    margin-top: 100px;
+}
+
+.note-deletion-header {
+    text-align: center;
+}
+
+.note-deletion-header-color {
+    color: gray;
+}
+
+.accept-cancel-deletion-bottom-panel {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
