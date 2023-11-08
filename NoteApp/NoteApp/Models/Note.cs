@@ -8,7 +8,7 @@
 		/// <summary>
 		/// Заголовок заметки.
 		/// </summary>
-		public string _title;
+		public string _title = "Untitled";
 
 		/// <summary>
 		/// Содержание заметки.

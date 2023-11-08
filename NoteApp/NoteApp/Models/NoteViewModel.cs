@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace NoteApp.Models
 {
 	/// <summary>
-	/// Модель представления заметки.
+	/// Модель представления заметок.
 	/// </summary>
 	public class NoteViewModel
 	{
@@ -66,7 +66,7 @@ namespace NoteApp.Models
 		/// <summary>
 		/// Возвращает и задает список заметок.
 		/// </summary>
-		public List<NoteViewModel> NoteViewModelList { get; set; } = new();
+		public List<NoteViewModel> NotesList { get; set; } = new();
 
 		/// <summary>
 		///  Возвращает и задает список SelectListItem для привязки модели к NotesListBox.
