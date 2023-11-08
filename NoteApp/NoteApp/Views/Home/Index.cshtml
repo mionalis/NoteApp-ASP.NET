@@ -18,10 +18,7 @@
 
 		<div class="left-bottom-info-box">
 			<p class="left-info-box-text">Show Category:</p>
-			<select>
-				<option>Пункт 1</option>
-				<option>Пункт 2</option>
-			</select>
+			<select asp-for="@Model.Category" asp-items="Html.GetEnumSelectList<NoteCategory>()"></select>
 		</div>
 	</div>
 

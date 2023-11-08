@@ -28,6 +28,12 @@ namespace NoteApp.Models
 			set => Note.Content = value;
 		}
 
+		public NoteCategory Category
+		{
+			get => Note.Category;
+			set => Note.Category = value;
+		}
+
 		public Note Note { get; set; } = new();
 
 		public NoteViewModel CurrentNote { get; set; }
