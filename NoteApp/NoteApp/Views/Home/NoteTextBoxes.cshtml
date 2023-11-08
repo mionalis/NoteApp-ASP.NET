@@ -1,15 +1,16 @@
 ﻿@model NoteApp.Models.NoteViewModel
 
-<div class="">
-	<label asp-for="Title"></label>
-	<div class="">
-		<input asp-for="Title" class="">
-	</div>
-</div>
+@section heads{
+	<link rel="stylesheet" href="css/styles.css" asp-append-version="true" />
+}
 
-<div class="">
-	<label asp-for="Content"></label>
-	<div class="">
-		<input asp-for="Content" class="">
-	</div>
+<div class="textboxes-header">
+	<input asp-for="Title" class="note-textbox-title">
+	<select class="textboxes-select">
+		<option>Пункт 1</option>
+		<option>Пункт 2</option>
+	</select>
 </div>
+<textarea asp-for="Content" type="text" class="note-textbox-content"> oninput='this.style.height = "";
+	this.style.height = this.scrollHeight + "px"'></textarea>
+

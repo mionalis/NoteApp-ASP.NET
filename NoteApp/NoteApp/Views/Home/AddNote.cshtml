@@ -1,19 +1,29 @@
 ﻿@model NoteApp.Models.NoteViewModel
 
-<div>
-	<h1>Add a new Contact</h1>
+@section heads{
+	<link rel="stylesheet" href="css/styles.css" asp-append-version="true" />
+}
 
+<div class="add-note-box">
+	<h1 class="add-note-header">Add a new Note</h1>
 	<form asp-controller="Home" asp-action="AddNote" class="" role="form">
+
+		@await Html.PartialAsync("NoteTextBoxes", Model)
 		
-		<div>
-			@await Html.PartialAsync("NoteTextBoxes", Model)
-
-			<div class="">
-				<div>
-					<button type="submit" class=""></button>
-				</div>
-			</div>
+		<div class="accept-cancel-bottom-panel">
+			<button type="submit" class="bottom-panel-button">
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M6 12L10.2426 16.2426L18.727 7.75732" stroke="#000000"
+					      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</button>
+			<button type="submit" class=" bottom-panel-button">
+				<svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path id="Vector" d="M16 16L12 12M12 12L8 8M12 12L16 8M12 12L8 16"
+					      stroke="#000000" stroke-width="2" stroke-linecap="round"
+					      stroke-linejoin="round"/>
+				</svg>
+			</button>
 		</div>
-
 	</form>
 </div>

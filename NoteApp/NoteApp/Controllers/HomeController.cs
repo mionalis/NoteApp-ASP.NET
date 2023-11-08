@@ -63,12 +63,14 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult EditNote(NoteViewModel noteViewModel)
 		{
-			var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(
-				c => c.Title == noteViewModel.Title);
+			/*	var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(
+					c => c.Title == noteViewModel.Title);*/
+
+			var selectedNote = new NoteViewModel();
 
 			if (selectedNote == null)
 			{
-				return NotFound();
+				return RedirectToAction("Index");
 			}
 
 			return View(selectedNote);
@@ -83,14 +85,14 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult DeleteNote(NoteViewModel noteViewModel)
 		{
-			/*var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(
-		        c => c.Title == noteViewModel.Title);*/
+			/*	var selectedNote = _noteViewModel.NoteViewModelList.FirstOrDefault(
+					c => c.Title == noteViewModel.Title);*/
 
 			var selectedNote = new NoteViewModel();
 
 			if (selectedNote == null)
 			{
-				return NotFound();
+				return RedirectToAction("Index");
 			}
 
 			return View(selectedNote);
