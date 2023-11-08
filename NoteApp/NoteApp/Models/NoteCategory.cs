@@ -1,5 +1,8 @@
 ﻿namespace NoteApp.Models
 {
+	/// <summary>
+	/// Категории заметок.
+	/// </summary>
 	public enum NoteCategory
 	{
 		Work,
