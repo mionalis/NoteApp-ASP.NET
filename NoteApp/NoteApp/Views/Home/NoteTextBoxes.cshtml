@@ -1,14 +1,12 @@
 ﻿@model NoteApp.Models.NoteViewModel
 
-@section heads{
-	<link rel="stylesheet" href="css/styles.css" asp-append-version="true" />
-}
-
 <div class="textboxes-header">
+
 	<input asp-for="Title" class="note-textbox-title">
 
 	<select asp-for="@Model.Category" asp-items="Html.GetEnumSelectList<NoteCategory>()"
 	        class="textboxes-select"></select>
+
 </div>
 
 <textarea asp-for="Content" type="text" class="note-textbox-content"> oninput='this.style.height = "";

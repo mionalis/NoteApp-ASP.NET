@@ -1,15 +1,16 @@
 ﻿@model NoteApp.Models.NoteViewModel
-
-@section heads{
-	<link rel="stylesheet" href="css/styles.css" asp-append-version="true" />
+@{
+	ViewData["Title"] = "Add Note";
 }
 
 <div class="add-note-box">
+
 	<h1 class="add-note-header">Add a new Note</h1>
+
 	<form asp-controller="Home" asp-action="AddNote" class="" role="form">
 
 		@await Html.PartialAsync("NoteTextBoxes", Model)
-		
+
 		<div class="accept-cancel-bottom-panel">
 			<button type="submit" class="bottom-panel-button">
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,5 +26,6 @@
 				</svg>
 			</button>
 		</div>
+
 	</form>
 </div>

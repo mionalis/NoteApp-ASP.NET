@@ -1,10 +1,15 @@
 ﻿@model NoteApp.Models.NoteViewModel
+@{
+	ViewData["Title"] = "Delete Note";
+}
 
 <div class="note-deletion-box">
+
 	<h1 class="note-deletion-header">Are you sure that you want to delete
 		<span class="note-deletion-header-color">"@Model.Title"</span> note?</h1>
 
 	<form asp-controller="Home" asp-action="AcceptNoteDeletion"
+
 	      class="accept-cancel-deletion-bottom-panel">
 		<button type="submit" class="bottom-panel-button">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,5 +24,6 @@
 				      stroke-linejoin="round"/>
 			</svg>
 		</button>
+
 	</form>
 </div>
