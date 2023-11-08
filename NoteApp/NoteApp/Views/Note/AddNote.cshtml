@@ -7,7 +7,7 @@
 
 	<h1 class="add-note-header">Add a new Note</h1>
 
-	<form asp-controller="Home" asp-action="AddNote" class="" role="form">
+	<form asp-controller="Note" asp-action="AddNote" class="" role="form">
 
 		@await Html.PartialAsync("NoteTextBoxes", Model)
 

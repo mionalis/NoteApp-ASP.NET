@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace NoteApp.Controllers
 {
-	public class HomeController : Controller
+	public class NoteController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<NoteController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		public NoteController(ILogger<NoteController> logger)
 		{
 			_logger = logger;
 		}
