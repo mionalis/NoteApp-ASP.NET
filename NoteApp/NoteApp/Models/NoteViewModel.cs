@@ -54,6 +54,17 @@ namespace NoteApp.Models
 		}
 
 		/// <summary>
+		/// Возвращает время создания заметки.
+		/// </summary>
+		public DateTime CreationTime => Note.CreationTime;
+
+		/// <summary>
+		/// Возвращает время последнего изменения заметки. Значение меняется при
+		/// изменении названия, категории или текста заметки.
+		/// </summary>
+		public DateTime LastModifiedTime => Note.LastModifiedTime;
+
+		/// <summary>
 		/// Возвращает и задает заметку: экземпляр класса Note. 
 		/// </summary>
 		public Note Note { get; set; } = new();
