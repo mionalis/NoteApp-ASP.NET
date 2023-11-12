@@ -29,9 +29,9 @@ namespace NoteApp.Controllers
 		}
 
 		/// <summary>
-		/// Возвращает и задает модель представления заметок.
+		/// Модель представления заметок.
 		/// </summary>
-		private NoteViewModel NoteViewModel { get; set; } = new();
+		private NoteViewModel _noteViewModel = new();
 
 		/// <summary>
 		/// Загружает главную страницу.
@@ -41,9 +41,9 @@ namespace NoteApp.Controllers
 		public IActionResult Index()
 		{
 			InitializeNoteListForTesting();
-			NoteViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
 
-			return View(NoteViewModel);
+			return View(_noteViewModel);
 		}
 
 		/// <summary>
@@ -56,13 +56,13 @@ namespace NoteApp.Controllers
 		{
 			InitializeNoteListForTesting();
 
-			var selectedNote = NoteViewModel.NotesList.FirstOrDefault(
+			var selectedNote = _noteViewModel.NotesList.FirstOrDefault(
 				c => c.Title == noteViewModel.Title);
 
-			NoteViewModel.CurrentNote = selectedNote;
+			_noteViewModel.CurrentNote = selectedNote;
 
-			NoteViewModel.NotesSelectListItems = GetNotesSelectListItems();
-			return View(NoteViewModel);
+			_noteViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			return View(_noteViewModel);
 		}
 
 		/// <summary>
@@ -168,7 +168,7 @@ namespace NoteApp.Controllers
         {
 	        var notesSelectListItems = new List<SelectListItem>();
 
-	        foreach (var note in NoteViewModel.NotesList)
+	        foreach (var note in _noteViewModel.NotesList)
 	        {
 		        var selectList = new SelectListItem()
 		        {
@@ -188,7 +188,7 @@ namespace NoteApp.Controllers
 		/// </summary>
         private void InitializeNoteListForTesting()
         {
-	        NoteViewModel.NotesList = new List<NoteViewModel>()
+	        _noteViewModel.NotesList = new List<NoteViewModel>()
 	        {
 		        new() { Title = "Note1", Content = "Content" },
 		        new() { Title = "Note2", Content = "Content" },
