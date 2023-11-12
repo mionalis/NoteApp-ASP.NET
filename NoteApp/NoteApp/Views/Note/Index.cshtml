@@ -6,8 +6,8 @@
 <form method="post" class="index-page-container">
 
 	<div class="right-read-content-box">
-		<input asp-for="CurrentNotes.Title" class="title-input" type="text" name="title" readonly/>
-		<textarea asp-for="CurrentNotes.Content" type="text" class="content-textarea" oninput='this.style.height = "";
+		<input asp-for="SelectedNote.Title" class="title-input" type="text" name="title" readonly/>
+		<textarea asp-for="SelectedNote.Content" type="text" class="content-textarea" oninput='this.style.height = "";
 			this.style.height = this.scrollHeight + "px"'></textarea>
 	</div>
 
@@ -18,7 +18,7 @@
 
 		<div class="left-bottom-info-box">
 			<p class="left-info-box-text">Show Category:</p>
-			<select asp-for="@Model.Category" asp-items="Html.GetEnumSelectList<NoteCategory>()"></select>
+			<select asp-for="SelectedNote.Category" asp-items="Html.GetEnumSelectList<NoteCategory>()"></select>
 		</div>
 	</div>
 
@@ -32,18 +32,33 @@
 		<div class="note-info-modified">
 			<p class="note-info-header-text">Modified:</p>
 		</div>
-		<div class="note-info-category-example">
-			<p class="note-info-example-text">@Model.Category</p>
-		</div>
-		<div class="note-info-created-example">
-			<p class="note-info-example-text">@Model.CreationTime</p>
-		</div>
-		<div class="note-info-modified-example">
-			<p class="note-info-example-text">@Model.LastModifiedTime</p>
-		</div>
+		@if (@Model.SelectedNote == null)
+		{
+			<div class="note-info-category-example">
+				<p class="note-info-example-text"></p>
+			</div>
+			<div class="note-info-created-example">
+				<p class="note-info-example-text"></p>
+			</div>
+			<div class="note-info-modified-example">
+				<p class="note-info-example-text"></p>
+			</div>
+		}
+		else
+		{
+			<div class="note-info-category-example">
+				<p class="note-info-example-text">@Model.SelectedNote.Category</p>
+			</div>
+			<div class="note-info-created-example">
+				<p class="note-info-example-text">@Model.SelectedNote.CreationTime</p>
+			</div>
+			<div class="note-info-modified-example">
+				<p class="note-info-example-text">@Model.SelectedNote.LastModifiedTime</p>
+			</div>
+		}
 	</div>
 
-	<select asp-for="Title" name="NotesListBox" asp-items="Model.NotesSelectListItems"
+	<select asp-for="SelectedNote.Title" name="NotesListBox" asp-items="Model.NotesSelectListItems"
 	        multiple class="left-listbox"></select>
 
 	<div class="left-bottom-panel">
