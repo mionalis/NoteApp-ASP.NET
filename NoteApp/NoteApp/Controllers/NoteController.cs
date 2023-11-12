@@ -14,8 +14,15 @@ namespace NoteApp.Controllers
 	/// </summary>
 	public class NoteController : Controller
 	{
+		/// <summary>
+		/// Oбъект ILogger, необходимый для логгирования данных.
+		/// </summary>
 		private readonly ILogger<NoteController> _logger;
 
+		/// <summary>
+		/// Создаёт экземпляр класса <see cref="NoteController"/>.
+		/// </summary>
+		/// <param name="logger">Логгер.</param>
 		public NoteController(ILogger<NoteController> logger)
 		{
 			_logger = logger;
