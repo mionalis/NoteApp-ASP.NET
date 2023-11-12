@@ -1,4 +1,4 @@
-﻿@model NoteApp.Models.NoteViewModel
+﻿@model NoteApp.Models.NotesViewModel
 @{
     ViewData["Title"] = "Home";
 }
@@ -6,8 +6,8 @@
 <form method="post" class="index-page-container">
 
 	<div class="right-read-content-box">
-		<input asp-for="CurrentNote.Title" class="title-input" type="text" name="title" readonly/>
-		<textarea asp-for="CurrentNote.Content" type="text" class="content-textarea" oninput='this.style.height = "";
+		<input asp-for="CurrentNotes.Title" class="title-input" type="text" name="title" readonly/>
+		<textarea asp-for="CurrentNotes.Content" type="text" class="content-textarea" oninput='this.style.height = "";
 			this.style.height = this.scrollHeight + "px"'></textarea>
 	</div>
 

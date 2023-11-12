@@ -6,21 +6,21 @@ namespace NoteApp.Models
 	/// <summary>
 	/// Модель представления заметок.
 	/// </summary>
-	public class NoteViewModel
+	public class NotesViewModel
 	{
 		/// <summary>
-		/// Создаёт экземпляр класса <see cref="NoteViewModel"/>.
+		/// Создаёт экземпляр класса <see cref="NotesViewModel"/>.
 		/// </summary>
 		/// <param name="note">Заметка.</param>
-		public NoteViewModel(Note note)
+		public NotesViewModel(Note note)
 		{
 			Note = note;
 		}
 
 		/// <summary>
-		/// Создаёт экземпляр класса <see cref="NoteViewModel"/>.
+		/// Создаёт экземпляр класса <see cref="NotesViewModel"/>.
 		/// </summary>
-		public NoteViewModel()
+		public NotesViewModel()
 		{
 		}
 
@@ -72,12 +72,12 @@ namespace NoteApp.Models
 		/// <summary>
 		/// Возвращает и задает текущую заметку, выбранную в NotesListBox.
 		/// </summary>
-		public NoteViewModel CurrentNote { get; set; }
+		public NotesViewModel CurrentNotes { get; set; }
 
 		/// <summary>
 		/// Возвращает и задает список заметок.
 		/// </summary>
-		public List<NoteViewModel> NotesList { get; set; } = new();
+		public List<NotesViewModel> NotesList { get; set; } = new();
 
 		/// <summary>
 		///  Возвращает и задает список SelectListItem для привязки модели к NotesListBox.
