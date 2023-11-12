@@ -30,7 +30,7 @@
 		/// </summary>
 		Finance,
 		/// <summary>
-		/// Другое.
+		/// Разное.
 		/// </summary>
 		Other
 	}
