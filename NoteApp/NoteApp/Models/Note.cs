@@ -21,16 +21,6 @@
 		private NoteCategory _category;
 
 		/// <summary>
-		/// Время создания заметки.
-		/// </summary>
-		private DateTime _creationTime;
-
-		/// <summary>
-		/// Время последнего изменения заметки.
-		/// </summary>
-		private DateTime _lastModifiedTime;
-
-		/// <summary>
 		/// Создаёт экземпляр класса <see cref="Note"/>.
 		/// </summary>
 		/// <param name="title">Заголовок заметки.</param>
@@ -41,6 +31,8 @@
 			Title = title;
 			Content = content;
 			Category = category;
+			CreationTime = DateTime.Now;
+			LastModifiedTime = CreationTime;
 		}
 
 		/// <summary>
@@ -48,6 +40,8 @@
 		/// </summary>
 		public Note()
 		{
+			CreationTime = DateTime.Now;
+			LastModifiedTime = CreationTime;
 		}
 
 		/// <summary>
@@ -90,18 +84,14 @@
 		}
 
 		/// <summary>
-		/// Возвращает время создания заметки.
-		/// </summary>
-		public DateTime CreationTime => _creationTime = DateTime.Now;
-
-		/// <summary>
 		/// Возвращает и локально задает время последнего изменения заметки. Значение меняется при
 		/// изменении названия, категории или текста заметки.
 		/// </summary>
-		public DateTime LastModifiedTime
-		{
-			get => _creationTime;
-			private set => _creationTime = value;
-		}
+		public DateTime LastModifiedTime { get; set; }
+
+		/// <summary>
+		/// Возвращает время создания заметки.
+		/// </summary>
+		public DateTime CreationTime { get; }
 	}
 }
