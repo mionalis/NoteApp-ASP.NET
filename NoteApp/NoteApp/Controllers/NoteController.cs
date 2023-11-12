@@ -124,7 +124,7 @@ namespace NoteApp.Controllers
 		/// <param name="noteViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Страница удаления заметки.</returns>
 		[HttpGet]
-		public IActionResult DeleteNote(NoteViewModel noteViewModel)
+		public IActionResult RemoveNote(NoteViewModel noteViewModel)
 		{
 			/*	var selectedNote = NoteViewModel.NotesList.FirstOrDefault(
 					c => c.Title == noteViewModel.Title);*/
