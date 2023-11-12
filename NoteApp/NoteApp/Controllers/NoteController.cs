@@ -94,9 +94,13 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult EditNote(NoteViewModel noteViewModel)
 		{
-			/*	var selectedNote = NoteViewModel.NotesList.FirstOrDefault(
+			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
+			// страницу редактирования, потому что на данный момент функция не работает
+			// корректно.
+			/*	var selectedNote = _noteViewModel.NotesList.FirstOrDefault(
 					c => c.Title == noteViewModel.Title);*/
 
+			// Добавлено для демонстрации страницы редактирования заметки.
 			var selectedNote = new NoteViewModel();
 
 			if (selectedNote == null)
@@ -126,9 +130,12 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult RemoveNote(NoteViewModel noteViewModel)
 		{
-			/*	var selectedNote = NoteViewModel.NotesList.FirstOrDefault(
+			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
+			// страницу удаления, потому что на данный момент функция не работает корректно.
+			/*	var selectedNote = _noteViewModel.NotesList.FirstOrDefault(
 					c => c.Title == noteViewModel.Title);*/
 
+			// Добавлено для демонстрации страницы удаления заметки.
 			var selectedNote = new NoteViewModel();
 
 			if (selectedNote == null)
