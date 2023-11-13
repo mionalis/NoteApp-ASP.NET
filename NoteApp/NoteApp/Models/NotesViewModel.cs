@@ -16,7 +16,8 @@ namespace NoteApp.Models
 		}
 
 		/// <summary>
-		/// Возвращает и задает заголовок заметки. Используется для привязки к NotesListBox.
+		/// Возвращает и задает заголовок заметки. Используется для получения выбранного элемента
+		/// из NotesListBox.
 		/// </summary>
 		[BindProperty(Name = "NotesListBox")]
 		public string Title { get; set; }
@@ -27,7 +28,7 @@ namespace NoteApp.Models
 		[BindProperty(Name = "NotesListBox")]
 		public Note SelectedNote { get; set; } 
 
-			/// <summary>
+		/// <summary>
 		/// Возвращает и задает список заметок.
 		/// </summary>
 		public List<Note> NotesList { get; set; } = new();
