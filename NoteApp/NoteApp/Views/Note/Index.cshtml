@@ -113,7 +113,8 @@
 @section Scripts {
 	<script type="text/javascript">
 		$("#NotesListBox").on("change", function () {
-				alert("changed!");
-			});
-</script>
+			var noteId = $("#NotesListBox").val();
+			$.post('@Url.Action("Index", "Note")', { id: noteId });
+		});
+	</script>
 }
