@@ -59,7 +59,7 @@
 	</div>
 
 	<select asp-for="ID" name="NotesListBox" asp-items="Model.NotesSelectListItems"
-	        multiple class="left-listbox"></select>
+			multiple class="left-listbox" id="NotesListBox"></select>
 
 	<div class="left-bottom-panel">
 		<button type="submit" asp-controller="Note" asp-action="Index" class="bottom-panel-button">
@@ -109,3 +109,11 @@
 		</a>
 	</div>
 </form>
+
+@section Scripts {
+	<script type="text/javascript">
+		$("#NotesListBox").on("change", function () {
+				alert("changed!");
+			});
+</script>
+}
