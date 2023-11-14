@@ -20,7 +20,7 @@ namespace NoteApp.Models
 		/// из NotesListBox.
 		/// </summary>
 		[BindProperty(Name = "NotesListBox")]
-		public string Title { get; set; }
+		public int ID { get; set; }
 
 		/// <summary>
 		/// Возвращает и задает текущую заметку, выбранную в NotesListBox.

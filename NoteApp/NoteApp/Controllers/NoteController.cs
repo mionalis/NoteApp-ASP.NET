@@ -57,7 +57,7 @@ namespace NoteApp.Controllers
 			InitializeNoteListForTesting();
 
 			var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-				c => c.Title == notesViewModel.Title);
+				note => note.ID == notesViewModel.ID);
 
 			_notesViewModel.SelectedNote = selectedNote;
 
@@ -180,7 +180,7 @@ namespace NoteApp.Controllers
 		        var selectList = new SelectListItem()
 		        {
 			        Text = note.Title,
-			        Value = note.Title,
+			        Value = note.ID.ToString(),
 					Selected = false
 		        };
 
@@ -197,9 +197,9 @@ namespace NoteApp.Controllers
         {
 	        _notesViewModel.NotesList = new List<Note>()
 	        {
-		        new() { Title = "Note1", Content = "Content" },
-		        new() { Title = "Note2", Content = "Content" },
-		        new() { Title = "Note3", Content = "Content" }
+		        new() {  ID = 1, Title = "Note1", Content = "Content" },
+		        new() {  ID = 2, Title = "Note2", Content = "Content" },
+		        new() {  ID = 3, Title = "Note3", Content = "Content" }
 			};
         }
 	}
