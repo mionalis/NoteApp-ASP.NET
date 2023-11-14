@@ -1,0 +1,16 @@
+﻿@model NoteApp.Models.Note
+@{
+	ViewData["Title"] = @ViewBag.Message;
+}
+
+<div>
+	<h1>@ViewBag.Message</h1>
+
+	<form method="post">
+		@await Html.PartialAsync("NoteTextBoxes", Model)
+
+		<div class="accept-cancel-bottom-panel">
+			@await Html.PartialAsync("AcceptCancelButtons")
+		</div>
+	</form>
+</div>
