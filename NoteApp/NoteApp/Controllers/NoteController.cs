@@ -20,6 +20,11 @@ namespace NoteApp.Controllers
 		private readonly ILogger<NoteController> _logger;
 
 		/// <summary>
+		/// Модель представления заметок.
+		/// </summary>
+		private NotesViewModel _notesViewModel = new();
+
+		/// <summary>
 		/// Создаёт экземпляр класса <see cref="NoteController"/>.
 		/// </summary>
 		/// <param name="logger">Логгер.</param>
@@ -27,11 +32,6 @@ namespace NoteApp.Controllers
 		{
 			_logger = logger;
 		}
-
-		/// <summary>
-		/// Модель представления заметок.
-		/// </summary>
-		private NotesViewModel _notesViewModel = new();
 
 		/// <summary>
 		/// Загружает главную страницу.
