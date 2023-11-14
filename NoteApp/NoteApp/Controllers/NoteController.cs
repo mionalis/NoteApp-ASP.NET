@@ -130,7 +130,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Страница удаления заметки.</returns>
 		[HttpGet]
-		public IActionResult RemoveNote(Note selectedListBoxObject)
+		public IActionResult RemoveNote(NotesViewModel selectedListBoxObject)
 		{
 			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
 			// страницу удаления, потому что на данный момент функция не работает корректно.
@@ -154,7 +154,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Удаляемая заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult AcceptNoteDeletion(Note note)
+		public IActionResult RemoveNote(Note note)
 		{
 			return RedirectToAction("Index");
 		}
