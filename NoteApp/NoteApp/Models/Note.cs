@@ -84,7 +84,7 @@
 		}
 
 		/// <summary>
-		/// ID заметки.
+		/// Возвращает и задает ID заметки.
 		/// </summary>
 		public int ID { get; set; }
 

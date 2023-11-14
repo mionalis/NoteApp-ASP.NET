@@ -16,8 +16,8 @@ namespace NoteApp.Models
 		}
 
 		/// <summary>
-		/// Возвращает и задает заголовок заметки. Используется для получения выбранного элемента
-		/// из NotesListBox.
+		/// Возвращает и задает ID заметки. Используется для получения выбранного элемента из
+		/// NotesListBox.
 		/// </summary>
 		[BindProperty(Name = "NotesListBox")]
 		public int ID { get; set; }
