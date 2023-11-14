@@ -89,10 +89,15 @@
 		}
 
 		/// <summary>
+		/// Возвращает и задает ID заметки.
+		/// </summary>
+		public int ID { get; set; }
+
+		/// <summary>
 		/// Возвращает и локально задает время последнего изменения заметки. Значение меняется при
 		/// изменении названия, категории или текста заметки.
 		/// </summary>
-		public DateTime LastModifiedTime { get; set; }
+		public DateTime LastModifiedTime { get; private set; }
 
 		/// <summary>
 		/// Возвращает время создания заметки.

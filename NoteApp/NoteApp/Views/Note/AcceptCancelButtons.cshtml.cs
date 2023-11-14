@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace NoteApp.Views.Home
+namespace NoteApp.Views.Note
 {
-    public class EditNoteModel : PageModel
+    public class AcceptCancelButtonsModel : PageModel
     {
         public void OnGet()
         {

@@ -32,7 +32,7 @@
 		<div class="note-info-modified">
 			<p class="note-info-header-text">Modified:</p>
 		</div>
-		@if (@Model.SelectedNote == null)
+		@if (Model.SelectedNote == null)
 		{
 			<div class="note-info-category-example">
 				<p class="note-info-example-text"></p>
@@ -58,7 +58,7 @@
 		}
 	</div>
 
-	<select asp-for="SelectedNote.Title" name="NotesListBox" asp-items="Model.NotesSelectListItems"
+	<select asp-for="ID" name="NotesListBox" asp-items="Model.NotesSelectListItems"
 	        multiple class="left-listbox"></select>
 
 	<div class="left-bottom-panel">

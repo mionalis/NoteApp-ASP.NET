@@ -20,6 +20,11 @@ namespace NoteApp.Controllers
 		private readonly ILogger<NoteController> _logger;
 
 		/// <summary>
+		/// Модель представления заметок.
+		/// </summary>
+		private NotesViewModel _notesViewModel = new();
+
+		/// <summary>
 		/// Создаёт экземпляр класса <see cref="NoteController"/>.
 		/// </summary>
 		/// <param name="logger">Логгер.</param>
@@ -27,11 +32,6 @@ namespace NoteApp.Controllers
 		{
 			_logger = logger;
 		}
-
-		/// <summary>
-		/// Модель представления заметок.
-		/// </summary>
-		private NotesViewModel _notesViewModel = new();
 
 		/// <summary>
 		/// Загружает главную страницу.
@@ -57,7 +57,7 @@ namespace NoteApp.Controllers
 			InitializeNoteListForTesting();
 
 			var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-				c => c.Title == notesViewModel.Title);
+				note => note.ID == notesViewModel.ID);
 
 			_notesViewModel.SelectedNote = selectedNote;
 
@@ -72,8 +72,9 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult AddNote()
         {
-	        return View();
-        }
+			ViewBag.Message = "Add Note";
+			return View("AddEditNote");
+		}
 
 		/// <summary>
 		/// Получает созданную заметку и добавляет ее в NotesListBox.
@@ -92,7 +93,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Страница редактирования выбранной заметки.</returns>
 		[HttpGet]
-		public IActionResult EditNote(Note selectedListBoxObject)
+		public IActionResult EditNote(NotesViewModel selectedListBoxObject)
 		{
 			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
 			// страницу редактирования, потому что на данный момент функция не работает
@@ -108,7 +109,8 @@ namespace NoteApp.Controllers
 				return RedirectToAction("Index");
 			}
 
-			return View(selectedNote);
+			ViewBag.Message = "Edit Note";
+			return View("AddEditNote", selectedNote);
 		}
 
 		/// <summary>
@@ -117,7 +119,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Отредактированная заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult AcceptModifiedNote(Note note)
+		public IActionResult EditNote(Note note)
 		{
 			return RedirectToAction("Index");
 		}
@@ -128,7 +130,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Страница удаления заметки.</returns>
 		[HttpGet]
-		public IActionResult RemoveNote(Note selectedListBoxObject)
+		public IActionResult RemoveNote(NotesViewModel selectedListBoxObject)
 		{
 			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
 			// страницу удаления, потому что на данный момент функция не работает корректно.
@@ -152,7 +154,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Удаляемая заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult AcceptNoteDeletion(Note note)
+		public IActionResult RemoveNote(Note note)
 		{
 			return RedirectToAction("Index");
 		}
@@ -180,7 +182,7 @@ namespace NoteApp.Controllers
 		        var selectList = new SelectListItem()
 		        {
 			        Text = note.Title,
-			        Value = note.Title,
+			        Value = note.ID.ToString(),
 					Selected = false
 		        };
 
@@ -197,9 +199,9 @@ namespace NoteApp.Controllers
         {
 	        _notesViewModel.NotesList = new List<Note>()
 	        {
-		        new() { Title = "Note1", Content = "Content" },
-		        new() { Title = "Note2", Content = "Content" },
-		        new() { Title = "Note3", Content = "Content" }
+		        new() {  ID = 1, Title = "Note1", Content = "Content" },
+		        new() {  ID = 2, Title = "Note2", Content = "Content" },
+		        new() {  ID = 3, Title = "Note3", Content = "Content" }
 			};
         }
 	}
