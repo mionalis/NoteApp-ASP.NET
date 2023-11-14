@@ -1,13 +1,13 @@
 ﻿@model NoteApp.Models.Note
 @{
-	ViewData["Title"] = "Add Note";
+	ViewData["Title"] = @ViewBag.Message;
 }
 
 <div class="add-note-box">
 
-	<h1 class="add-note-header">Add a new Note</h1>
+	<h1 class="add-note-header">@ViewBag.Message</h1>
 
-	<form asp-controller="Note" asp-action="AddNote" class="" role="form">
+	<form method="post">
 
 		@await Html.PartialAsync("NoteTextBoxes", Model)
 

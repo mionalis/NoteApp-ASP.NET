@@ -72,8 +72,9 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult AddNote()
         {
-	        return View();
-        }
+			ViewBag.Message = "Add Note";
+			return View("AddEditNote");
+		}
 
 		/// <summary>
 		/// Получает созданную заметку и добавляет ее в NotesListBox.
@@ -92,7 +93,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Страница редактирования выбранной заметки.</returns>
 		[HttpGet]
-		public IActionResult EditNote(Note selectedListBoxObject)
+		public IActionResult EditNote(NotesViewModel selectedListBoxObject)
 		{
 			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
 			// страницу редактирования, потому что на данный момент функция не работает
@@ -108,7 +109,8 @@ namespace NoteApp.Controllers
 				return RedirectToAction("Index");
 			}
 
-			return View(selectedNote);
+			ViewBag.Message = "Edit Note";
+			return View("AddEditNote", selectedNote);
 		}
 
 		/// <summary>
@@ -117,7 +119,7 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Отредактированная заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult AcceptModifiedNote(Note note)
+		public IActionResult EditNote(Note note)
 		{
 			return RedirectToAction("Index");
 		}
