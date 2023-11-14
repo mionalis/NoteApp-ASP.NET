@@ -97,6 +97,6 @@
 		/// <summary>
 		/// Возвращает время создания заметки.
 		/// </summary>
-		public DateTime CreationTime { get; }
+		public DateTime CreationTime { get; private set; }
 	}
 }

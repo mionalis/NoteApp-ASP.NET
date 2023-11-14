@@ -6,6 +6,7 @@ using System.Security.Principal;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace NoteApp.Controllers
 {
@@ -19,6 +20,8 @@ namespace NoteApp.Controllers
 		/// </summary>
 		private readonly ILogger<NoteController> _logger;
 
+		private NoteDbContext _noteDbContext;
+
 		/// <summary>
 		/// Модель представления заметок.
 		/// </summary>
@@ -28,9 +31,10 @@ namespace NoteApp.Controllers
 		/// Создаёт экземпляр класса <see cref="NoteController"/>.
 		/// </summary>
 		/// <param name="logger">Логгер.</param>
-		public NoteController(ILogger<NoteController> logger)
+		public NoteController(ILogger<NoteController> logger, NoteDbContext noteDbContext)
 		{
 			_logger = logger;
+			_noteDbContext = noteDbContext;
 		}
 
 		/// <summary>
@@ -40,7 +44,6 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			InitializeNoteListForTesting();
 			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
 
 			return View(_notesViewModel);
@@ -52,12 +55,10 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult Index(NotesViewModel notesViewModel)
+		public IActionResult Index(NotesViewModel selectedListBoxObject)
 		{
-			InitializeNoteListForTesting();
-
-			var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-				note => note.ID == notesViewModel.ID);
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
+				note => note.ID == selectedListBoxObject.ID);
 
 			_notesViewModel.SelectedNote = selectedNote;
 
@@ -82,8 +83,11 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Созданная заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult AddNote(Note selectedNote)
+		public IActionResult AddNote(Note note)
 		{
+			_noteDbContext.Notes.Add(note); 
+			_noteDbContext.SaveChanges();
+
 			return RedirectToAction("Index");
 		}
 
@@ -95,14 +99,8 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult EditNote(NotesViewModel selectedListBoxObject)
 		{
-			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
-			// страницу редактирования, потому что на данный момент функция не работает
-			// корректно.
-			/*	var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-					c => c.Title == selectedListBoxObject.Title);*/
-
-			// Добавлено для демонстрации страницы редактирования заметки.
-			var selectedNote = new Note();
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
+				note => note.ID == selectedListBoxObject.ID);
 
 			if (selectedNote == null)
 			{
@@ -121,6 +119,9 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult EditNote(Note note)
 		{
+			_noteDbContext.Notes.Update(note);
+			_noteDbContext.SaveChanges();
+
 			return RedirectToAction("Index");
 		}
 
@@ -132,13 +133,8 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult RemoveNote(NotesViewModel selectedListBoxObject)
 		{
-			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
-			// страницу удаления, потому что на данный момент функция не работает корректно.
-			/*	var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-					c => c.Title == selectedListBoxObject.Title);*/
-
-			// Добавлено для демонстрации страницы удаления заметки.
-			var selectedNote = new Note();
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
+				note => note.ID == selectedListBoxObject.ID);
 
 			if (selectedNote == null)
 			{
@@ -156,6 +152,9 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult RemoveNote(Note note)
 		{
+			_noteDbContext.Notes.Remove(note);
+			_noteDbContext.SaveChanges();
+
 			return RedirectToAction("Index");
 		}
 
@@ -177,7 +176,7 @@ namespace NoteApp.Controllers
         {
 	        var notesSelectListItems = new List<SelectListItem>();
 
-	        foreach (var note in _notesViewModel.NotesList)
+	        foreach (var note in _noteDbContext.Notes)
 	        {
 		        var selectList = new SelectListItem()
 		        {
@@ -190,19 +189,6 @@ namespace NoteApp.Controllers
 	        }
 
 			return notesSelectListItems;
-        }
-
-		/// <summary>
-		/// Инициализирует список заметок значениями для отладки. Временный метод.
-		/// </summary>
-        private void InitializeNoteListForTesting()
-        {
-	        _notesViewModel.NotesList = new List<Note>()
-	        {
-		        new() {  ID = 1, Title = "Note1", Content = "Content" },
-		        new() {  ID = 2, Title = "Note2", Content = "Content" },
-		        new() {  ID = 3, Title = "Note3", Content = "Content" }
-			};
         }
 	}
 }
