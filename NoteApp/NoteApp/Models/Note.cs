@@ -45,11 +45,6 @@
 		}
 
 		/// <summary>
-		/// Идентификационный номер заметки.
-		/// </summary>
-		public int ID { get; set; }
-
-		/// <summary>
 		/// Возвращает и задает заголовок заметки.
 		/// </summary>
 		public string Title
