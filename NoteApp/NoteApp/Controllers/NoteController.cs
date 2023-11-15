@@ -44,8 +44,7 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
-
+			GetNotesSelectListItems();
 			return View(_notesViewModel);
 		}
 
@@ -62,7 +61,7 @@ namespace NoteApp.Controllers
 
 			_notesViewModel.SelectedNote = selectedNote;
 
-			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			GetNotesSelectListItems();
 			return View(_notesViewModel);
 		}
 
@@ -99,19 +98,15 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult GetValueForEditing(NotesViewModel selectedListBoxObject)
 		{
+			var selectedNoteID = selectedListBoxObject.ID;
 
-			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
-				note => note.ID == selectedListBoxObject.ID);
-
-			if (selectedNote == null)
+			if (selectedNoteID == 0)
 			{
 				return RedirectToAction("Index");
 			}
 
-			var id = selectedNote.ID;
-
-			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
-			return RedirectToAction("EditNote", new { id });
+			GetNotesSelectListItems();
+			return RedirectToAction("EditNote", new { id = selectedNoteID });
 		}
 
 		/// <summary>
@@ -150,18 +145,15 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult GetValueForRemoving(NotesViewModel selectedListBoxObject)
 		{
-			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
-				note => note.ID == selectedListBoxObject.ID);
+			var selectedNoteID = selectedListBoxObject.ID;
 
-			if (selectedNote == null)
+			if (selectedNoteID == 0)
 			{
 				return RedirectToAction("Index");
 			}
 
-			var id = selectedNote.ID;
-
-			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
-			return RedirectToAction("RemoveNote", new { id });
+			GetNotesSelectListItems();
+			return RedirectToAction("RemoveNote", new { id = selectedNoteID });
 		}
 
 		/// <summary>
@@ -210,23 +202,18 @@ namespace NoteApp.Controllers
 		/// в NotesListBox.
 		/// </summary>
 		/// <returns>Список SelectListItem.</returns>
-		private List<SelectListItem> GetNotesSelectListItems()
+		private void GetNotesSelectListItems()
         {
-	        var notesSelectListItems = new List<SelectListItem>();
-
 	        foreach (var note in _noteDbContext.Notes)
 	        {
 		        var selectList = new SelectListItem()
 		        {
 			        Text = note.Title,
-			        Value = note.ID.ToString(),
-					Selected = false
+			        Value = note.ID.ToString()
 		        };
 
-		        notesSelectListItems.Add(selectList);
+		        _notesViewModel.NotesSelectListItems.Add(selectList);
 	        }
-
-			return notesSelectListItems;
         }
 	}
 }
