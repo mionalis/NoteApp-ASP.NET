@@ -98,15 +98,12 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult GetValueForEditing(NotesViewModel selectedListBoxObject)
 		{
-			var selectedNoteID = selectedListBoxObject.ID;
-
-			if (selectedNoteID == 0)
+			if (selectedListBoxObject.ID == 0)
 			{
 				return RedirectToAction("Index");
 			}
 
-			GetNotesSelectListItems();
-			return RedirectToAction("EditNote", new { id = selectedNoteID });
+			return RedirectToAction("EditNote", new { id = selectedListBoxObject.ID });
 		}
 
 		/// <summary>
@@ -145,15 +142,12 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult GetValueForRemoving(NotesViewModel selectedListBoxObject)
 		{
-			var selectedNoteID = selectedListBoxObject.ID;
-
-			if (selectedNoteID == 0)
+			if (selectedListBoxObject.ID == 0)
 			{
 				return RedirectToAction("Index");
 			}
 
-			GetNotesSelectListItems();
-			return RedirectToAction("RemoveNote", new { id = selectedNoteID });
+			return RedirectToAction("RemoveNote", new { id = selectedListBoxObject.ID });
 		}
 
 		/// <summary>
