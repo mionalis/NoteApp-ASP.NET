@@ -49,13 +49,13 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Получает данные с главной страницы.
 		/// </summary>
-		/// <param name="selectedListBoxObject">Выбранная заметка в NotesListBox.</param>
+		/// <param name="id">ID выбранной заметки в NotesListBox.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult Index(NotesViewModel selectedListBoxObject)
+		public IActionResult Index(int id)
 		{
 			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
-				note => note.ID == selectedListBoxObject.ID);
+				note => note.ID == id);
 
 			_notesViewModel.SelectedNote = selectedNote;
 
