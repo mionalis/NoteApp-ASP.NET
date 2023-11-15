@@ -1,12 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NoteApp.Models;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using NoteApp.Models;
 
 namespace NoteApp.Controllers
 {
@@ -20,6 +14,9 @@ namespace NoteApp.Controllers
 		/// </summary>
 		private readonly ILogger<NoteController> _logger;
 
+		/// <summary>
+		/// Контекст данных.
+		/// </summary>
 		private NoteDbContext _noteDbContext;
 
 		/// <summary>
@@ -51,7 +48,7 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Получает данные с главной страницы.
 		/// </summary>
-		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
+		/// <param name="selectedListBoxObject">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
 		public IActionResult Index(NotesViewModel selectedListBoxObject)
@@ -62,9 +59,13 @@ namespace NoteApp.Controllers
 			_notesViewModel.SelectedNote = selectedNote;
 
 			GetNotesSelectListItems();
-			return View(_notesViewModel);
+			return View("Index", _notesViewModel);
 		}
 
+		/// <summary>
+		/// При отмене действия перенапрявляет на главную страницу.
+		/// </summary>
+		/// <returns>Главная страница.</returns>
 		public IActionResult CancelAction()
 		{
 			return RedirectToAction("Index");
@@ -84,7 +85,7 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Получает созданную заметку и добавляет ее в NotesListBox.
 		/// </summary>
-		/// <param name="notesViewModel">Созданная заметка.</param>
+		/// <param name="note">Созданная заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
 		public IActionResult AddNote(Note note)
@@ -95,6 +96,11 @@ namespace NoteApp.Controllers
 			return RedirectToAction("Index");
 		}
 
+		/// <summary>
+		/// Получает выбранную в NotesListBox заметку и отправляет ее на страницу редактирования.
+		/// </summary>
+		/// <param name="selectedListBoxObject">Выбранная заметка в NotesListBox.</param>
+		/// <returns>Передача в метод <see cref="EditNote(int)"/> значения ID выбранной заметки.</returns>
 		[HttpPost]
 		public IActionResult GetValueForEditing(NotesViewModel selectedListBoxObject)
 		{
@@ -109,7 +115,7 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Загружает страницу редактирования выбранной заметки.
 		/// </summary>
-		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
+		/// <param name="id">ID выбранной заметки в NotesListBox.</param>
 		/// <returns>Страница редактирования выбранной заметки.</returns>
 		[HttpGet]
 		public IActionResult EditNote(int id)
@@ -128,7 +134,7 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Получает отредактированную заметку и обновляет ее в NotesListBox.
 		/// </summary>
-		/// <param name="notesViewModel">Отредактированная заметка.</param>
+		/// <param name="note">Отредактированная заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
 		public IActionResult EditNote(Note note)
@@ -139,6 +145,11 @@ namespace NoteApp.Controllers
 			return RedirectToAction("Index");
 		}
 
+		/// <summary>
+		/// Получает выбранную в NotesListBox заметку и отправляет ее на страницу удаления.
+		/// </summary>
+		/// <param name="selectedListBoxObject">Выбранная заметка в NotesListBox.</param>
+		/// <returns>Передача в метод <see cref="RemoveNote(int)"/> значения ID выбранной заметки.</returns>
 		[HttpPost]
 		public IActionResult GetValueForRemoving(NotesViewModel selectedListBoxObject)
 		{
@@ -153,7 +164,7 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Загружает страницу удаления заметки.
 		/// </summary>
-		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
+		/// <param name="id">ID выбранной заметка в NotesListBox.</param>
 		/// <returns>Страница удаления заметки.</returns>
 		[HttpGet]
 		public IActionResult RemoveNote(int id)
@@ -171,7 +182,7 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Выполняет удаление заметки из NotesListBox.
 		/// </summary>
-		/// <param name="notesViewModel">Удаляемая заметка.</param>
+		/// <param name="note">Удаляемая заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
 		public IActionResult RemoveNote(Note note)
@@ -195,7 +206,6 @@ namespace NoteApp.Controllers
 		/// Добавляет объекты из списка заметок в список SelectListItem для их отображения
 		/// в NotesListBox.
 		/// </summary>
-		/// <returns>Список SelectListItem.</returns>
 		private void GetNotesSelectListItems()
         {
 	        foreach (var note in _noteDbContext.Notes)
