@@ -28,6 +28,7 @@ namespace NoteApp.Controllers
 		/// Создаёт экземпляр класса <see cref="NoteController"/>.
 		/// </summary>
 		/// <param name="logger">Логгер.</param>
+		/// <param name="noteDbContext">Контекст данных.</param>
 		public NoteController(ILogger<NoteController> logger, NoteDbContext noteDbContext)
 		{
 			_logger = logger;
