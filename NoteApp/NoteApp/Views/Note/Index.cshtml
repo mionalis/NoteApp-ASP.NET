@@ -34,26 +34,20 @@
 		</div>
 		@if (Model.SelectedNote == null)
 		{
-			<div class="note-info-category-example">
-				<p class="note-info-example-text"></p>
-			</div>
-			<div class="note-info-created-example">
-				<p class="note-info-example-text"></p>
-			</div>
-			<div class="note-info-modified-example">
-				<p class="note-info-example-text"></p>
-			</div>
+			<div class="note-info-category-text-header"></div>
+			<div class="note-info-created-text-header"></div>
+			<div class="note-info-modified-text-header"></div>
 		}
 		else
 		{
-			<div class="note-info-category-example">
-				<p class="note-info-example-text">@Model.SelectedNote.Category</p>
+			<div class="note-info-category-text-header">
+				<p class="note-info-text">@Model.SelectedNote.Category</p>
 			</div>
-			<div class="note-info-created-example">
-				<p class="note-info-example-text">@Model.SelectedNote.CreationTime</p>
+			<div class="note-info-created-text-header">
+				<p class="note-info-text">@Model.SelectedNote.CreationTime</p>
 			</div>
-			<div class="note-info-modified-example">
-				<p class="note-info-example-text">@Model.SelectedNote.LastModifiedTime</p>
+			<div class="note-info-modified-text-header">
+				<p class="note-info-text">@Model.SelectedNote.LastModifiedTime</p>
 			</div>
 		}
 	</div>
