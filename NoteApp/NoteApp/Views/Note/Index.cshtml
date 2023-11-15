@@ -7,8 +7,8 @@
 
 	<div class="right-read-content-box">
 		<input asp-for="SelectedNote.Title" class="title-input" type="text" name="title" readonly/>
-		<textarea asp-for="SelectedNote.Content" type="text" class="content-textarea" oninput='this.style.height = "";
-			this.style.height = this.scrollHeight + "px"'></textarea>
+		<textarea asp-for="SelectedNote.Content" type="text" class="content-textarea" readonly 
+		input='this.style.height = ""; this.style.height = this.scrollHeight + "px"'></textarea>
 	</div>
 
 	<div class="left-info-box">
