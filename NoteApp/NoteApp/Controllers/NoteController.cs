@@ -66,6 +66,11 @@ namespace NoteApp.Controllers
 			return View(_notesViewModel);
 		}
 
+		public IActionResult CancelAction()
+		{
+			return RedirectToAction("Index");
+		}
+
 		/// <summary>
 		/// Загружает страницу добавления новой заметки.
 		/// </summary>
@@ -94,10 +99,15 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult GetValueForEditing(NotesViewModel selectedListBoxObject)
 		{
+
 			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
 				note => note.ID == selectedListBoxObject.ID);
 
-			_notesViewModel.SelectedNote = selectedNote;
+			if (selectedNote == null)
+			{
+				return RedirectToAction("Index");
+			}
+
 			var id = selectedNote.ID;
 
 			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
@@ -143,7 +153,11 @@ namespace NoteApp.Controllers
 			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
 				note => note.ID == selectedListBoxObject.ID);
 
-			_notesViewModel.SelectedNote = selectedNote;
+			if (selectedNote == null)
+			{
+				return RedirectToAction("Index");
+			}
+
 			var id = selectedNote.ID;
 
 			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
