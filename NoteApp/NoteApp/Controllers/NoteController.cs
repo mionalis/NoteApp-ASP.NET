@@ -55,9 +55,10 @@ namespace NoteApp.Controllers
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult Index(int id)
+		public IActionResult Index(NotesViewModel selectedListBoxObject)
 		{
-			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
+				note => note.ID == selectedListBoxObject.ID);
 
 			_notesViewModel.SelectedNote = selectedNote;
 
@@ -90,16 +91,28 @@ namespace NoteApp.Controllers
 			return RedirectToAction("Index");
 		}
 
+		[HttpPost]
+		public IActionResult GetValueForEditing(NotesViewModel selectedListBoxObject)
+		{
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
+				note => note.ID == selectedListBoxObject.ID);
+
+			_notesViewModel.SelectedNote = selectedNote;
+			var id = selectedNote.ID;
+
+			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			return RedirectToAction("EditNote", new { id });
+		}
+
 		/// <summary>
 		/// Загружает страницу редактирования выбранной заметки.
 		/// </summary>
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Страница редактирования выбранной заметки.</returns>
 		[HttpGet]
-		public IActionResult EditNote(NotesViewModel selectedListBoxObject)
+		public IActionResult EditNote(int id)
 		{
-			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
-				note => note.ID == selectedListBoxObject.ID);
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 
 			if (selectedNote == null)
 			{
@@ -124,16 +137,28 @@ namespace NoteApp.Controllers
 			return RedirectToAction("Index");
 		}
 
+		[HttpPost]
+		public IActionResult GetValueForRemoving(NotesViewModel selectedListBoxObject)
+		{
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
+				note => note.ID == selectedListBoxObject.ID);
+
+			_notesViewModel.SelectedNote = selectedNote;
+			var id = selectedNote.ID;
+
+			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			return RedirectToAction("RemoveNote", new { id });
+		}
+
 		/// <summary>
 		/// Загружает страницу удаления заметки.
 		/// </summary>
 		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
 		/// <returns>Страница удаления заметки.</returns>
 		[HttpGet]
-		public IActionResult RemoveNote(NotesViewModel selectedListBoxObject)
+		public IActionResult RemoveNote(int id)
 		{
-			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
-				note => note.ID == selectedListBoxObject.ID);
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 
 			if (selectedNote == null)
 			{
