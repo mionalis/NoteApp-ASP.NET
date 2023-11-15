@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NoteApp.Models;
 
 namespace NoteApp.Controllers
@@ -91,7 +92,7 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult AddNote(Note note)
 		{
-			_noteDbContext.Notes.Add(note); 
+			_noteDbContext.Notes.Add(note);
 			_noteDbContext.SaveChanges();
 
 			return RedirectToAction("Index");
@@ -141,6 +142,7 @@ namespace NoteApp.Controllers
 		public IActionResult EditNote(Note note)
 		{
 			_noteDbContext.Notes.Update(note);
+			_noteDbContext.Entry(note).Property(x => x.CreationTime).IsModified = false;
 			_noteDbContext.SaveChanges();
 
 			return RedirectToAction("Index");
