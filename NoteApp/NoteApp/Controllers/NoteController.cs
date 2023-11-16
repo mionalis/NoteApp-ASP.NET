@@ -99,19 +99,23 @@ namespace NoteApp.Controllers
 		}
 
 		/// <summary>
-		/// Получает выбранную в NotesListBox заметку и отправляет ее на страницу редактирования.
+		/// Получает выбранную в NotesListBox заметку и отправляет ее на страницу редактирования
+		/// или удаления.
 		/// </summary>
 		/// <param name="selectedListBoxObject">Выбранная заметка в NotesListBox.</param>
-		/// <returns>Передача в метод <see cref="EditNote(int)"/> значения ID выбранной заметки.</returns>
+		/// <returns>Передача в методы <see cref="EditNote(int)"/> и <see cref="RemoveNote(int)"/>
+		/// значения ID выбранной заметки.</returns>
 		[HttpPost]
-		public IActionResult GetValueForEditing(NotesViewModel selectedListBoxObject)
+		public IActionResult GetValueFromListBox(
+			NotesViewModel selectedListBoxObject, 
+			string action)
 		{
 			if (selectedListBoxObject.ID == 0)
 			{
 				return RedirectToAction("Index");
 			}
 
-			return RedirectToAction("EditNote", new { id = selectedListBoxObject.ID });
+			return RedirectToAction(action, new { id = selectedListBoxObject.ID });
 		}
 
 		/// <summary>
@@ -146,22 +150,6 @@ namespace NoteApp.Controllers
 			_noteDbContext.SaveChanges();
 
 			return RedirectToAction("Index");
-		}
-
-		/// <summary>
-		/// Получает выбранную в NotesListBox заметку и отправляет ее на страницу удаления.
-		/// </summary>
-		/// <param name="selectedListBoxObject">Выбранная заметка в NotesListBox.</param>
-		/// <returns>Передача в метод <see cref="RemoveNote(int)"/> значения ID выбранной заметки.</returns>
-		[HttpPost]
-		public IActionResult GetValueForRemoving(NotesViewModel selectedListBoxObject)
-		{
-			if (selectedListBoxObject.ID == 0)
-			{
-				return RedirectToAction("Index");
-			}
-
-			return RedirectToAction("RemoveNote", new { id = selectedListBoxObject.ID });
 		}
 
 		/// <summary>
