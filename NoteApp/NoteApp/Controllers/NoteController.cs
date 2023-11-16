@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Models;
+using System;
 
 namespace NoteApp.Controllers
 {
@@ -98,6 +99,14 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult AddNote(Note note)
 		{
+			ValidateNote(note);
+
+			if (!ModelState.IsValid)
+			{
+				ViewBag.Message = "Add Note";
+				return View("AddEditNote", note);
+			}
+
 			_noteDbContext.Notes.Add(note);
 			_noteDbContext.SaveChanges();
 
@@ -151,6 +160,14 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult EditNote(Note note)
 		{
+			ValidateNote(note);
+
+			if (!ModelState.IsValid)
+			{
+				ViewBag.Message = "Edit Note";
+				return View("AddEditNote", note);
+			}
+
 			_noteDbContext.Notes.Update(note);
 			_noteDbContext.Entry(note).Property(x => x.CreationTime).IsModified = false;
 			_noteDbContext.SaveChanges();
@@ -216,5 +233,13 @@ namespace NoteApp.Controllers
 		        _notesViewModel.NotesSelectListItems.Add(selectList);
 	        }
         }
+
+		private void ValidateNote(Note note)
+		{
+			if (note.Title.Length > 50)
+			{
+				ModelState.AddModelError("Name", "");
+			}
+		}
 	}
 }

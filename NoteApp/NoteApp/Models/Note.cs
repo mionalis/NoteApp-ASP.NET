@@ -1,4 +1,6 @@
-﻿namespace NoteApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NoteApp.Models
 {
 	/// <summary>
 	/// Описывает заметку.
@@ -47,6 +49,7 @@
 		/// <summary>
 		/// Возвращает и задает заголовок заметки.
 		/// </summary>
+		[Required]
 		public string Title
 		{
 			get => _title;
@@ -60,6 +63,7 @@
 		/// <summary>
 		/// Возвращает и задает текст заметки.
 		/// </summary>
+		[Required]
 		public string Content
 		{
 			get => _content;
