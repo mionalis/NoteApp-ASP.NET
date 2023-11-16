@@ -98,13 +98,11 @@
 	<script>
 		$("#notes-list-box").on("change", function () {
 			var noteId = $("#notes-list-box").val();
-
 			$.ajax({
 				type: "Post",
 				url: "/Note/Index?id=" + noteId,
 				contentType: "html",
 				success: function (response) {
-
 					$("#main-container").html(response);
 				}
 			});
