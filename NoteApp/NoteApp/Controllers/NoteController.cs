@@ -236,9 +236,11 @@ namespace NoteApp.Controllers
 
 		private void ValidateNote(Note note)
 		{
-			if (note.Title.Length > 50)
+			if (note.Title != null && note.Title.Length > 5)
 			{
-				ModelState.AddModelError("Name", "");
+				ModelState.AddModelError(
+					"Title", 
+					"The Title length should not exceed 50 characters.");
 			}
 		}
 	}
