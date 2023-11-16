@@ -39,10 +39,17 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Загружает главную страницу.
 		/// </summary>
+		/// <param name="id">ID отображаемой заметки.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(int id)
 		{
+			if (id != 0)
+			{
+				var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
+				_notesViewModel.SelectedNote = selectedNote;
+			}
+
 			GetNotesSelectListItems();
 			return View(_notesViewModel);
 		}
@@ -53,11 +60,9 @@ namespace NoteApp.Controllers
 		/// <param name="id">ID выбранной заметки в NotesListBox.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult Index(int id)
+		public IActionResult ShowNote(int id)
 		{
-			var selectedNote = _noteDbContext.Notes.FirstOrDefault(
-				note => note.ID == id);
-
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 			_notesViewModel.SelectedNote = selectedNote;
 
 			GetNotesSelectListItems();
@@ -80,8 +85,9 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult AddNote()
         {
+			var note = new Note();
 			ViewBag.Message = "Add Note";
-			return View("AddEditNote");
+			return View("AddEditNote", note);
 		}
 
 		/// <summary>
@@ -95,7 +101,7 @@ namespace NoteApp.Controllers
 			_noteDbContext.Notes.Add(note);
 			_noteDbContext.SaveChanges();
 
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", new { id = note.ID });
 		}
 
 		/// <summary>
@@ -149,7 +155,7 @@ namespace NoteApp.Controllers
 			_noteDbContext.Entry(note).Property(x => x.CreationTime).IsModified = false;
 			_noteDbContext.SaveChanges();
 
-			return RedirectToAction("Index");
+			return RedirectToAction("Index",  new { id = note.ID });
 		}
 
 		/// <summary>

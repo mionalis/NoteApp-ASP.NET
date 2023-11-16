@@ -100,7 +100,7 @@
 			var noteId = $("#notes-list-box").val();
 			$.ajax({
 				type: "Post",
-				url: "/Note/Index?id=" + noteId,
+				url: "/Note/ShowNote?id=" + noteId,
 				contentType: "html",
 				success: function (response) {
 					$("#main-container").html(response);
