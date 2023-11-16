@@ -236,7 +236,7 @@ namespace NoteApp.Controllers
 
 		private void ValidateNote(Note note)
 		{
-			if (note.Title != null && note.Title.Length > 5)
+			if (note.Title != null && note.Title.Length > 50)
 			{
 				ModelState.AddModelError(
 					"Title", 
