@@ -64,7 +64,7 @@
 				      stroke="#000000" stroke-width="2" stroke-linecap="round"/>
 			</svg>
 		</a>
-		<button type="submit" name="action" value="EditNote" class="bottom-panel-button"
+		<button id="edit-note" type="submit" name="action" value="EditNote" class="bottom-panel-button"
 				asp-controller="Note" asp-action="GetValueFromListBox">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091
@@ -76,7 +76,7 @@
 				      stroke="#000000" stroke-width="2"/>
 			</svg>
 		</button>
-		<button type="submit" name="action" value="RemoveNote" class="bottom-panel-button"
+		<button id="delete-note" type="submit" name="action" value="RemoveNote" class="bottom-panel-button"
 				asp-controller="Note" asp-action="GetValueFromListBox">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8
@@ -95,6 +95,15 @@
 </form>
 
 @section Scripts {
+	<script>
+		$("#edit-note, #delete-note").click(function (e) {
+			var noteId = $("#notes-list-box").val();
+			if (noteId == 0) {
+				e.preventDefault();
+			}
+		});
+	</script>
+
 	<script>
 		$("#notes-list-box").on("change", function () {
 			var noteId = $("#notes-list-box").val();
