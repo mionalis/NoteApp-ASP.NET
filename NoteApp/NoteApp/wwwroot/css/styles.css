@@ -53,6 +53,7 @@ select {
     grid-template-rows: minmax(35px, 6%) 94%;
     height: 100vh;
     min-width: 100vw;
+    overflow-y: hidden;
 }
 
 .index-page-container {
@@ -179,7 +180,7 @@ select {
 .right-read-content-box {
     border-bottom: 1px solid rgb(192,192,192);
     grid-area: content;
-    overflow-y: auto;
+    overflow-y: hidden;
     scrollbar-width: thin;
 }
 
@@ -291,6 +292,10 @@ a:hover {
     width: 500px;
 }
 
+.add-edit-note-box {
+    overflow-y: hidden;
+}
+
 .note-textbox-title {
     border: 1px solid rgb(192,192,192);
     border-radius: 10px;
@@ -306,7 +311,7 @@ a:hover {
     border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
-    height: 442px;
+    height: 60vh;
     margin-left: 25px;
     padding: 10px;
     resize: none;
