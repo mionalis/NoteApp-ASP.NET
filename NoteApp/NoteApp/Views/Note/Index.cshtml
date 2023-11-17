@@ -22,7 +22,8 @@
 
 		<div class="left-bottom-info-box">
 			<p class="left-info-box-text">Show Category:</p>
-			<select asp-items="Html.GetEnumSelectList<NoteCategory>()"></select>
+			<select asp-for="NoteCategory" asp-items="Html.GetEnumSelectList<NoteCategory>()" name="NoteCategoryComboBox" id="note-category-combo-box">
+			</select>
 		</div>
 	</div>
 
@@ -60,6 +61,14 @@
 			multiple class="left-listbox" id="notes-list-box"></select>
 
 	<div class="left-bottom-panel">
+		<button type="submit" class="bottom-panel-button" asp-controller="Note" asp-action="Test">
+			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M15 12H12M12 12H9M12 12V9M12 12V15M17 21H7C4.79086 21 3 19.2091 3 17V7C3 
+						4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091 19.2091
+						21 17 21Z"
+				      stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+			</svg>
+		</button>
 		<a class="bottom-panel-button" asp-controller="Note" asp-action="AddNote">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M15 12H12M12 12H9M12 12V9M12 12V15M17 21H7C4.79086 21 3 19.2091 3 17V7C3 
@@ -69,7 +78,7 @@
 			</svg>
 		</a>
 		<button id="edit-note" type="submit" name="action" value="EditNote" class="bottom-panel-button"
-				asp-controller="Note" asp-action="GetValueFromListBox">
+		        asp-controller="Note" asp-action="GetValueFromListBox">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091
 						 19.2091 21 17 21H7C4.79086 21 3 19.2091 3 17V7Z" stroke="#000000" stroke-width="2"/>
@@ -81,7 +90,7 @@
 			</svg>
 		</button>
 		<button id="delete-note" type="submit" name="action" value="RemoveNote" class="bottom-panel-button"
-				asp-controller="Note" asp-action="GetValueFromListBox">
+		        asp-controller="Note" asp-action="GetValueFromListBox">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8
 						 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21
@@ -114,6 +123,20 @@
 			$.ajax({
 				type: "Post",
 				url: "/Note/ShowNote?id=" + noteId,
+				contentType: "html",
+				success: function (response) {
+					$("#main-container").html(response);
+				}
+			});
+		});
+	</script>
+
+	<script>
+		$("#note-category-combo-box").on("change", function () {
+			var categoryId = $("#note-category-combo-box").val();
+			$.ajax({
+				type: "Post",
+				url: "/Note/Test?id=" + categoryId,
 				contentType: "html",
 				success: function (response) {
 					$("#main-container").html(response);

@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Models;
 using System;
+using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NoteApp.Controllers
 {
@@ -89,6 +92,26 @@ namespace NoteApp.Controllers
 			var note = new Note();
 			ViewBag.Message = "Add Note";
 			return View("AddEditNote", note);
+		}
+
+		[HttpPost]
+		public IActionResult Test(int id)
+		{
+			var enumValue = (NoteCategory) id;
+			var f = _noteDbContext.Notes.Where(note => note.Category == enumValue).ToList();
+
+			foreach (var note in f)
+			{
+				var selectList = new SelectListItem()
+				{
+					Text = note.Title,
+					Value = note.ID.ToString()
+				};
+
+				_notesViewModel.NotesSelectListItems.Add(selectList);
+			}
+
+			return View("Index", _notesViewModel);
 		}
 
 		/// <summary>
