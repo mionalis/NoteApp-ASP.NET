@@ -53,6 +53,7 @@ select {
     grid-template-rows: minmax(35px, 6%) 94%;
     height: 100vh;
     min-width: 100vw;
+    overflow-y: hidden;
 }
 
 .index-page-container {
@@ -101,7 +102,7 @@ select {
     border-bottom: 1px solid rgb(192,192,192);
     grid-area: right-info;
     display: grid;
-    grid-template-columns: minmax(80px, 10%) 65% minmax(80px, 10%) auto;
+    grid-template-columns: minmax(80px, 10%) 55% minmax(80px, 10%) auto;
 }
 
 .note-info-category {
@@ -125,7 +126,7 @@ select {
     grid-row: 2;
 }
 
-.note-info-category-example {
+.note-info-category-text-header {
     align-items: center;
     display: flex;
     grid-column: 2;
@@ -133,7 +134,7 @@ select {
     justify-content: left;
 }
 
-.note-info-created-example {
+.note-info-created-text-header {
     align-items: center;
     display: flex;
     grid-column: 2;
@@ -141,7 +142,7 @@ select {
     justify-content: left;
 }
 
-.note-info-modified-example {
+.note-info-modified-text-header {
     align-items: center;
     display: flex;
     grid-column: 4;
@@ -152,7 +153,7 @@ select {
     margin: 5px 25px;
 }
 
-.note-info-example-text {
+.note-info-text {
     margin: 5px 25px;
     color: rgb(90, 90, 90);
 }
@@ -167,6 +168,10 @@ select {
     width: 100%;
 }
 
+.left-listbox:focus {
+    outline: none;
+}
+
 .left-listbox option {
     border-bottom: 1px solid rgb(192,192,192);
     padding: 10px 0 10px 25px;
@@ -175,7 +180,7 @@ select {
 .right-read-content-box {
     border-bottom: 1px solid rgb(192,192,192);
     grid-area: content;
-    overflow-y: auto;
+    overflow-y: hidden;
     scrollbar-width: thin;
 }
 
@@ -226,6 +231,7 @@ select {
     margin: 15px 10px 15px 20px;
     padding: 0px;
     width: 35px;
+    cursor: pointer;
 }
 
 .bottom-panel-button:hover svg {
@@ -286,6 +292,10 @@ a:hover {
     width: 500px;
 }
 
+.add-edit-note-box {
+    overflow-y: hidden;
+}
+
 .note-textbox-title {
     border: 1px solid rgb(192,192,192);
     border-radius: 10px;
@@ -301,7 +311,7 @@ a:hover {
     border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
-    height: 442px;
+    height: 60vh;
     margin-left: 25px;
     padding: 10px;
     resize: none;

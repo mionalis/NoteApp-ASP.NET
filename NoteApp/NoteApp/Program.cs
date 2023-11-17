@@ -1,7 +1,13 @@
+using NoteApp.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connection = "Server=(localdb)\\mssqllocaldb;Database=applicationdb;Trusted_Connection=True;";
+builder.Services.AddDbContext<NoteDbContext>(options => options.UseSqlServer(connection));
 
 var app = builder.Build();
 

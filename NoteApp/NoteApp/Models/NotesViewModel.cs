@@ -26,12 +26,7 @@ namespace NoteApp.Models
 		/// Возвращает и задает текущую заметку, выбранную в NotesListBox.
 		/// </summary>
 		[BindProperty(Name = "NotesListBox")]
-		public Note SelectedNote { get; set; } 
-
-		/// <summary>
-		/// Возвращает и задает список заметок.
-		/// </summary>
-		public List<Note> NotesList { get; set; } = new();
+		public Note SelectedNote { get; set; }
 
 		/// <summary>
 		///  Возвращает и задает список SelectListItem для привязки модели к NotesListBox.

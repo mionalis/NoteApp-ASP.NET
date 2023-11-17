@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NoteApp.Models;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using NoteApp.Models;
 
 namespace NoteApp.Controllers
 {
@@ -20,6 +16,11 @@ namespace NoteApp.Controllers
 		private readonly ILogger<NoteController> _logger;
 
 		/// <summary>
+		/// Контекст данных.
+		/// </summary>
+		private NoteDbContext _noteDbContext;
+
+		/// <summary>
 		/// Модель представления заметок.
 		/// </summary>
 		private NotesViewModel _notesViewModel = new();
@@ -28,41 +29,53 @@ namespace NoteApp.Controllers
 		/// Создаёт экземпляр класса <see cref="NoteController"/>.
 		/// </summary>
 		/// <param name="logger">Логгер.</param>
-		public NoteController(ILogger<NoteController> logger)
+		/// <param name="noteDbContext">Контекст данных.</param>
+		public NoteController(ILogger<NoteController> logger, NoteDbContext noteDbContext)
 		{
 			_logger = logger;
+			_noteDbContext = noteDbContext;
 		}
 
 		/// <summary>
 		/// Загружает главную страницу.
 		/// </summary>
+		/// <param name="id">ID отображаемой заметки.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(int id)
 		{
-			InitializeNoteListForTesting();
-			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
+			if (id != 0)
+			{
+				var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
+				_notesViewModel.SelectedNote = selectedNote;
+			}
 
+			GetNotesSelectListItems();
 			return View(_notesViewModel);
 		}
 
 		/// <summary>
 		/// Получает данные с главной страницы.
 		/// </summary>
-		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
+		/// <param name="id">ID выбранной заметки в NotesListBox.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult Index(NotesViewModel notesViewModel)
+		public IActionResult ShowNote(int id)
 		{
-			InitializeNoteListForTesting();
-
-			var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-				note => note.ID == notesViewModel.ID);
-
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 			_notesViewModel.SelectedNote = selectedNote;
 
-			_notesViewModel.NotesSelectListItems = GetNotesSelectListItems();
-			return View(_notesViewModel);
+			GetNotesSelectListItems();
+			return View("Index", _notesViewModel);
+		}
+
+		/// <summary>
+		/// При отмене действия перенапрявляет на главную страницу.
+		/// </summary>
+		/// <returns>Главная страница.</returns>
+		public IActionResult CancelAction()
+		{
+			return RedirectToAction("Index");
 		}
 
 		/// <summary>
@@ -72,37 +85,54 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult AddNote()
         {
+			var note = new Note();
 			ViewBag.Message = "Add Note";
-			return View("AddEditNote");
+			return View("AddEditNote", note);
 		}
 
 		/// <summary>
 		/// Получает созданную заметку и добавляет ее в NotesListBox.
 		/// </summary>
-		/// <param name="notesViewModel">Созданная заметка.</param>
+		/// <param name="note">Созданная заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult AddNote(Note selectedNote)
+		public IActionResult AddNote(Note note)
 		{
-			return RedirectToAction("Index");
+			_noteDbContext.Notes.Add(note);
+			_noteDbContext.SaveChanges();
+
+			return RedirectToAction("Index", new { id = note.ID });
+		}
+
+		/// <summary>
+		/// Получает выбранную в NotesListBox заметку и отправляет ее на страницу редактирования
+		/// или удаления.
+		/// </summary>
+		/// <param name="selectedListBoxObject">Выбранная заметка в NotesListBox.</param>
+		/// <returns>Передача в методы <see cref="EditNote(int)"/> и <see cref="RemoveNote(int)"/>
+		/// значения ID выбранной заметки.</returns>
+		[HttpPost]
+		public IActionResult GetValueFromListBox(
+			NotesViewModel selectedListBoxObject, 
+			string action)
+		{
+			if (selectedListBoxObject.ID == 0)
+			{
+				return RedirectToAction("Index");
+			}
+
+			return RedirectToAction(action, new { id = selectedListBoxObject.ID });
 		}
 
 		/// <summary>
 		/// Загружает страницу редактирования выбранной заметки.
 		/// </summary>
-		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
+		/// <param name="id">ID выбранной заметки в NotesListBox.</param>
 		/// <returns>Страница редактирования выбранной заметки.</returns>
 		[HttpGet]
-		public IActionResult EditNote(NotesViewModel selectedListBoxObject)
+		public IActionResult EditNote(int id)
 		{
-			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
-			// страницу редактирования, потому что на данный момент функция не работает
-			// корректно.
-			/*	var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-					c => c.Title == selectedListBoxObject.Title);*/
-
-			// Добавлено для демонстрации страницы редактирования заметки.
-			var selectedNote = new Note();
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 
 			if (selectedNote == null)
 			{
@@ -116,29 +146,27 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Получает отредактированную заметку и обновляет ее в NotesListBox.
 		/// </summary>
-		/// <param name="notesViewModel">Отредактированная заметка.</param>
+		/// <param name="note">Отредактированная заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
 		public IActionResult EditNote(Note note)
 		{
-			return RedirectToAction("Index");
+			_noteDbContext.Notes.Update(note);
+			_noteDbContext.Entry(note).Property(x => x.CreationTime).IsModified = false;
+			_noteDbContext.SaveChanges();
+
+			return RedirectToAction("Index",  new { id = note.ID });
 		}
 
 		/// <summary>
 		/// Загружает страницу удаления заметки.
 		/// </summary>
-		/// <param name="notesViewModel">Выбранная заметка в NotesListBox.</param>
+		/// <param name="id">ID выбранной заметка в NotesListBox.</param>
 		/// <returns>Страница удаления заметки.</returns>
 		[HttpGet]
-		public IActionResult RemoveNote(NotesViewModel selectedListBoxObject)
+		public IActionResult RemoveNote(int id)
 		{
-			// Получение выбранной заметки из ListBox. Закомментировано, чтобы продемонстрировать
-			// страницу удаления, потому что на данный момент функция не работает корректно.
-			/*	var selectedNote = _notesViewModel.NotesList.FirstOrDefault(
-					c => c.Title == selectedListBoxObject.Title);*/
-
-			// Добавлено для демонстрации страницы удаления заметки.
-			var selectedNote = new Note();
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 
 			if (selectedNote == null)
 			{
@@ -151,11 +179,14 @@ namespace NoteApp.Controllers
 		/// <summary>
 		/// Выполняет удаление заметки из NotesListBox.
 		/// </summary>
-		/// <param name="notesViewModel">Удаляемая заметка.</param>
+		/// <param name="note">Удаляемая заметка.</param>
 		/// <returns>Главная страница.</returns>
 		[HttpPost]
 		public IActionResult RemoveNote(Note note)
 		{
+			_noteDbContext.Notes.Remove(note);
+			_noteDbContext.SaveChanges();
+
 			return RedirectToAction("Index");
 		}
 
@@ -172,37 +203,18 @@ namespace NoteApp.Controllers
 		/// Добавляет объекты из списка заметок в список SelectListItem для их отображения
 		/// в NotesListBox.
 		/// </summary>
-		/// <returns>Список SelectListItem.</returns>
-		private List<SelectListItem> GetNotesSelectListItems()
+		private void GetNotesSelectListItems()
         {
-	        var notesSelectListItems = new List<SelectListItem>();
-
-	        foreach (var note in _notesViewModel.NotesList)
+	        foreach (var note in _noteDbContext.Notes)
 	        {
 		        var selectList = new SelectListItem()
 		        {
 			        Text = note.Title,
-			        Value = note.ID.ToString(),
-					Selected = false
+			        Value = note.ID.ToString()
 		        };
 
-		        notesSelectListItems.Add(selectList);
+		        _notesViewModel.NotesSelectListItems.Add(selectList);
 	        }
-
-			return notesSelectListItems;
-        }
-
-		/// <summary>
-		/// Инициализирует список заметок значениями для отладки. Временный метод.
-		/// </summary>
-        private void InitializeNoteListForTesting()
-        {
-	        _notesViewModel.NotesList = new List<Note>()
-	        {
-		        new() {  ID = 1, Title = "Note1", Content = "Content" },
-		        new() {  ID = 2, Title = "Note2", Content = "Content" },
-		        new() {  ID = 3, Title = "Note3", Content = "Content" }
-			};
         }
 	}
 }
