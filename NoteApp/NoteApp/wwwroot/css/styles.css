@@ -226,6 +226,7 @@ select {
     margin: 15px 10px 15px 20px;
     padding: 0px;
     width: 35px;
+    cursor: pointer;
 }
 
 .bottom-panel-button:hover svg {
