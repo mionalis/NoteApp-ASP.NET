@@ -140,6 +140,7 @@
 				contentType: "html",
 				success: function (response) {
 					$("#main-container").html(response);
+					$("#note-category-combo-box").val(categoryId);
 				}
 			});
 		});
