@@ -24,6 +24,8 @@ namespace NoteApp.Controllers
 		/// </summary>
 		private NoteDbContext _noteDbContext;
 
+		private static bool _isFiltering;
+
 		/// <summary>
 		/// Модель представления заметок.
 		/// </summary>
@@ -69,7 +71,23 @@ namespace NoteApp.Controllers
 			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 			_notesViewModel.SelectedNote = selectedNote;
 
-			GetNotesSelectListItems();
+			if (_isFiltering)
+			{
+				var enumValue = selectedNote.Category;
+				var f = _noteDbContext.Notes.Where(note => note.Category == enumValue).ToList();
+
+				foreach (var note in f)
+				{
+					var selectList = new SelectListItem()
+					{
+						Text = note.Title,
+						Value = note.ID.ToString()
+					};
+
+					_notesViewModel.NotesSelectListItems.Add(selectList);
+				}
+			}
+
 			return View("Index", _notesViewModel);
 		}
 
@@ -97,6 +115,7 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult Test(int id)
 		{
+			_isFiltering = true;
 			var enumValue = (NoteCategory) id;
 			var f = _noteDbContext.Notes.Where(note => note.Category == enumValue).ToList();
 

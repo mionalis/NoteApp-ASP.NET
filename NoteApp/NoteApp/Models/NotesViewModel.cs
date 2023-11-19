@@ -23,7 +23,7 @@ namespace NoteApp.Models
 		public int ID { get; set; }
 
 		[BindProperty(Name = "NoteCategoryComboBox")]
-		public NoteCategory NoteCategory { get; set; }
+		public string NoteCategory { get; set; }
 
 		/// <summary>
 		/// Возвращает и задает текущую заметку, выбранную в NotesListBox.
