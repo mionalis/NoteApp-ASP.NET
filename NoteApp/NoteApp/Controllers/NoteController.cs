@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NoteApp.Models;
 using System;
 using System.Collections.Generic;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NoteApp.Controllers
@@ -87,6 +88,10 @@ namespace NoteApp.Controllers
 					_notesViewModel.NotesSelectListItems.Add(selectList);
 				}
 			}
+			else
+			{
+				GetNotesSelectListItems();
+			}
 
 			return View("Index", _notesViewModel);
 		}
@@ -115,6 +120,13 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult Test(int id)
 		{
+			if (id == -1)
+			{
+				_isFiltering = false;
+				GetNotesSelectListItems();
+				return View("Index", _notesViewModel); 
+			}
+
 			_isFiltering = true;
 			var enumValue = (NoteCategory) id;
 			var f = _noteDbContext.Notes.Where(note => note.Category == enumValue).ToList();
