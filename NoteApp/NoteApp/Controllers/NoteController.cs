@@ -72,27 +72,13 @@ namespace NoteApp.Controllers
 			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 			_notesViewModel.SelectedNote = selectedNote;
 
-			if (_isFiltering)
-			{
-				var enumValue = selectedNote.Category;
-				var f = _noteDbContext.Notes.Where(note => note.Category == enumValue).ToList();
-
-				foreach (var note in f)
-				{
-					var selectList = new SelectListItem()
-					{
-						Text = note.Title,
-						Value = note.ID.ToString()
-					};
-
-					_notesViewModel.NotesSelectListItems.Add(selectList);
-				}
-			}
-			else
+			if (!_isFiltering)
 			{
 				GetNotesSelectListItems();
+				return View("Index", _notesViewModel);
 			}
 
+			GetFilteredSelectListItems(selectedNote.Category);
 			return View("Index", _notesViewModel);
 		}
 
@@ -124,23 +110,13 @@ namespace NoteApp.Controllers
 			{
 				_isFiltering = false;
 				GetNotesSelectListItems();
+
 				return View("Index", _notesViewModel); 
 			}
 
 			_isFiltering = true;
-			var enumValue = (NoteCategory) id;
-			var f = _noteDbContext.Notes.Where(note => note.Category == enumValue).ToList();
-
-			foreach (var note in f)
-			{
-				var selectList = new SelectListItem()
-				{
-					Text = note.Title,
-					Value = note.ID.ToString()
-				};
-
-				_notesViewModel.NotesSelectListItems.Add(selectList);
-			}
+			var noteCategory = (NoteCategory) id;
+			GetFilteredSelectListItems(noteCategory);
 
 			return View("Index", _notesViewModel);
 		}
@@ -287,6 +263,23 @@ namespace NoteApp.Controllers
 		        _notesViewModel.NotesSelectListItems.Add(selectList);
 	        }
         }
+
+		private void GetFilteredSelectListItems(NoteCategory category)
+		{
+			var filteredNotes = _noteDbContext.Notes.Where(
+				note => note.Category == category).ToList();
+
+			foreach (var note in filteredNotes)
+			{
+				var selectList = new SelectListItem()
+				{
+					Text = note.Title,
+					Value = note.ID.ToString()
+				};
+
+				_notesViewModel.NotesSelectListItems.Add(selectList);
+			}
+		}
 
 		private void ValidateNote(Note note)
 		{
