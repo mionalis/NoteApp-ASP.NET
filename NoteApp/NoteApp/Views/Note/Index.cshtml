@@ -131,7 +131,7 @@
 			var categoryId = $("#note-category-combo-box").val();
 			$.ajax({
 				type: "Post",
-				url: "/Note/Test?id=" + categoryId,
+				url: "/Note/FilterNotes?id=" + categoryId,
 				contentType: "html",
 				success: function (response) {
 					$("#main-container").html(response);

@@ -16,6 +16,11 @@ namespace NoteApp.Controllers
 	public class NoteController : Controller
 	{
 		/// <summary>
+		/// Выбрана ли категория в ComboBox для фильтрации заметок в NotesListBox.
+		/// </summary>
+		private static bool _isFiltering;
+
+		/// <summary>
 		/// Oбъект ILogger, необходимый для логгирования данных.
 		/// </summary>
 		private readonly ILogger<NoteController> _logger;
@@ -24,8 +29,6 @@ namespace NoteApp.Controllers
 		/// Контекст данных.
 		/// </summary>
 		private NoteDbContext _noteDbContext;
-
-		private static bool _isFiltering;
 
 		/// <summary>
 		/// Модель представления заметок.
@@ -103,9 +106,15 @@ namespace NoteApp.Controllers
 			return View("AddEditNote", note);
 		}
 
+		/// <summary>
+		/// Производит фильтрацию заметок в NotesListBox согласно выбранной категории. 
+		/// </summary>
+		/// <param name="id">ID выбранной категории заметки.</param>
+		/// <returns>Главная страница.</returns>
 		[HttpPost]
-		public IActionResult Test(int id)
+		public IActionResult FilterNotes(int id)
 		{
+			// Если в ComboBox выбрано "All".
 			if (id == -1)
 			{
 				_isFiltering = false;
@@ -264,6 +273,11 @@ namespace NoteApp.Controllers
 	        }
         }
 
+		/// <summary>
+		/// Добавляет объекты из списка заметок, отфильтрованного по одной категории, в список
+		/// SelectListItem для их отображения в NotesListBox.
+		/// </summary>
+		/// <param name="category">Категория заметки.</param>
 		private void GetFilteredSelectListItems(NoteCategory category)
 		{
 			var filteredNotes = _noteDbContext.Notes.Where(
@@ -281,6 +295,11 @@ namespace NoteApp.Controllers
 			}
 		}
 
+		/// <summary>
+		/// Выполняет валидацию текстовых полей заметки.
+		/// Длина заголовка не должна превышать 50 символов.
+		/// </summary>
+		/// <param name="note">Валидируемая заметка.</param>
 		private void ValidateNote(Note note)
 		{
 			if (note.Title != null && note.Title.Length > 50)
