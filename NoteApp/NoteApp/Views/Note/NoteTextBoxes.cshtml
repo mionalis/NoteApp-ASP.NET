@@ -1,7 +1,7 @@
 ﻿@model NoteApp.Models.Note
 
 <div class="textboxes-header">
-	<input asp-for="Title" class="input-validation-error note-textbox-title">
+	<input asp-for="Title" class="note-textbox-title">
 
 	<select asp-for="@Model.Category" asp-items="Html.GetEnumSelectList<NoteCategory>()"
 	        class="textboxes-select"></select>

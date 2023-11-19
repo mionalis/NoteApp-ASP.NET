@@ -318,6 +318,10 @@ a:hover {
     border: 2px solid rgb(235,93,93);
 }
 
+.note-textbox-title.valid {
+    border: 1px solid rgb(192,192,192);
+}
+
 .note-textbox-title:focus {
     outline: none;
     border: 2px solid grey;
@@ -344,9 +348,17 @@ a:hover {
     width: 96%;
 }
 
+.note-textbox-content.input-validation-error {
+    border: 2px solid rgb(235,93,93);
+}
+
+note-textbox-content.valid {
+    border: 1px solid rgb(192,192,192);
+}
+
 .note-textbox-content:focus {
-    outline: none;
-    border: 2px solid rgb(75,75,75);
+outline: none;
+border: 2px solid rgb(75,75,75);
 }
 
 .accept-cancel-bottom-panel {
