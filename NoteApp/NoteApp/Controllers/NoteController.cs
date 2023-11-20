@@ -50,13 +50,24 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult Index(int id)
 		{
-			if (id != 0)
+			if (id == 0)
 			{
-				var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
-				_notesViewModel.SelectedNote = selectedNote;
+				GetNotesSelectListItems();
+				return View(_notesViewModel);
 			}
 
-			GetNotesSelectListItems();
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
+			_notesViewModel.SelectedNote = selectedNote;
+
+			if (_isFiltering)
+			{
+				GetFilteredSelectListItems(selectedNote.Category);
+			}
+			else
+			{
+				GetNotesSelectListItems();
+			}
+
 			return View(_notesViewModel);
 		}
 
@@ -99,6 +110,7 @@ namespace NoteApp.Controllers
         {
 			var note = new Note();
 			ViewBag.Message = "Add Note";
+			_isFiltering = false;
 			return View("AddEditNote", note);
 		}
 
