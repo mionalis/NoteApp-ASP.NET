@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NoteApp.Models;
+using NoteApp.Services;
 
 namespace NoteApp.Controllers
 {
@@ -132,10 +134,9 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult AddNote(Note note)
 		{
-			ValidateNote(note);
-
-			if (!ModelState.IsValid)
+			if (Validator.ValidateNote(note).Item1)
 			{
+				ModelState.AddModelError("Title", (Validator.ValidateNote(note).Item2));
 				ViewBag.Message = "Add Note";
 				return View("AddEditNote", note);
 			}
@@ -193,10 +194,9 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult EditNote(Note note)
 		{
-			ValidateNote(note);
-
-			if (!ModelState.IsValid)
+			if (Validator.ValidateNote(note).Item1)
 			{
+				ModelState.AddModelError("Title", (Validator.ValidateNote(note).Item2));
 				ViewBag.Message = "Edit Note";
 				return View("AddEditNote", note);
 			}
@@ -286,21 +286,6 @@ namespace NoteApp.Controllers
 				};
 
 				_notesViewModel.NotesSelectListItems.Add(selectList);
-			}
-		}
-
-		/// <summary>
-		/// Выполняет валидацию текстовых полей заметки.
-		/// Длина заголовка не должна превышать 50 символов.
-		/// </summary>
-		/// <param name="note">Валидируемая заметка.</param>
-		private void ValidateNote(Note note)
-		{
-			if (note.Title != null && note.Title.Length > 50)
-			{
-				ModelState.AddModelError(
-					"Title", 
-					"The Title length should not exceed 50 characters.");
 			}
 		}
 	}
