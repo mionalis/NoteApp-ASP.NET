@@ -52,6 +52,8 @@ namespace NoteApp.Controllers
 		{
 			if (id == 0)
 			{
+				// Установить выбранным в ComboBox элемент "All".
+				_notesViewModel.CategoryID = -1;
 				GetNotesSelectListItems();
 				return View(_notesViewModel);
 			}
@@ -62,9 +64,11 @@ namespace NoteApp.Controllers
 			if (_isFiltering)
 			{
 				GetFilteredSelectListItems(selectedNote.Category);
+				_notesViewModel.CategoryID = (int) selectedNote.Category;
 			}
 			else
 			{
+				_notesViewModel.CategoryID = -1;
 				GetNotesSelectListItems();
 			}
 

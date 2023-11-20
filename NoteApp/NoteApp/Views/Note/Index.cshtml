@@ -22,7 +22,7 @@
 
 		<div class="left-bottom-info-box">
 			<p class="left-info-box-text">Show Category:</p>
-			<select asp-items="Html.GetEnumSelectList<NoteCategory>()" id="note-category-combo-box">
+			<select asp-for="CategoryID" asp-items="Html.GetEnumSelectList<NoteCategory>()" id="note-category-combo-box">
 				<option value="-1">All</option>
 			</select>
 		</div>
