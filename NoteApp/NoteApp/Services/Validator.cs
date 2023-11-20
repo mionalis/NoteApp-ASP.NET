@@ -3,6 +3,9 @@ using NoteApp.Models;
 
 namespace NoteApp.Services
 {
+    /// <summary>
+    /// Выполняет валидацию значений.
+    /// </summary>
     public static class Validator
     {
 		/// <summary>
