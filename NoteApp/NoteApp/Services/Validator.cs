@@ -17,7 +17,7 @@ namespace NoteApp.Services
 		/// сообщением об ошибке.</returns>
 		public static (bool, string) ValidateNote(Note note)
         {
-            if (note.Title != null && note.Title.Length > 50)
+            if (string.IsNullOrEmpty(note.Title) && note.Title.Length > 50)
             {
                 return (true, "The Title length should not exceed 50 characters.");
             }
