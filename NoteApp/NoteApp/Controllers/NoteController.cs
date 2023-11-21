@@ -213,6 +213,16 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult EditNote(Note note)
 		{
+			var oldNote = _noteDbContext.Notes.AsNoTracking().FirstOrDefault(
+				oldNote => oldNote.ID == note.ID);
+
+			if (oldNote.Title == note.Title &&
+			    oldNote.Content == note.Content &&
+			    oldNote.Category == note.Category)
+			{
+				return RedirectToAction("Index", new { id = note.ID });
+			}
+
 			var noteValidator = Validator.ValidateNote(note);
 
 			if (noteValidator.HasError)
