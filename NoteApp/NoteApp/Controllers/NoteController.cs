@@ -150,9 +150,11 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult AddNote(Note note)
 		{
-			if (Validator.ValidateNote(note).Item1)
+			var noteValidator = Validator.ValidateNote(note);
+
+			if (noteValidator.HasError)
 			{
-				ModelState.AddModelError("Title", (Validator.ValidateNote(note).Item2));
+				ModelState.AddModelError("Title", noteValidator.ErrorMessage);
 				ViewBag.Message = "Add Note";
 				return View("AddEditNote", note);
 			}
@@ -210,9 +212,11 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult EditNote(Note note)
 		{
-			if (Validator.ValidateNote(note).Item1)
+			var noteValidator = Validator.ValidateNote(note);
+
+			if (noteValidator.HasError)
 			{
-				ModelState.AddModelError("Title", (Validator.ValidateNote(note).Item2));
+				ModelState.AddModelError("Title", noteValidator.ErrorMessage);
 				ViewBag.Message = "Edit Note";
 				return View("AddEditNote", note);
 			}
