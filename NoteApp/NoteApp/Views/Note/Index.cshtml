@@ -7,8 +7,12 @@
 
 	<div class="right-read-content-box">
 		<input asp-for="SelectedNote.Title" class="title-input" type="text" name="title" readonly/>
-		<textarea asp-for="SelectedNote.Content" type="text" class="content-textarea" readonly 
-		input='this.style.height = ""; this.style.height = this.scrollHeight + "px"'></textarea>
+		<p class="note-content-text">
+			@if (Model.SelectedNote != null)
+			{
+				@Model.SelectedNote.Content
+			}
+		</p>
 	</div>
 
 	<div class="left-info-box">
@@ -18,7 +22,9 @@
 
 		<div class="left-bottom-info-box">
 			<p class="left-info-box-text">Show Category:</p>
-			<select asp-for="SelectedNote.Category" asp-items="Html.GetEnumSelectList<NoteCategory>()"></select>
+			<select asp-for="CategoryID" asp-items="Html.GetEnumSelectList<NoteCategory>()" id="note-category-combo-box">
+				<option value="-1">All</option>
+			</select>
 		</div>
 	</div>
 
@@ -65,7 +71,7 @@
 			</svg>
 		</a>
 		<button id="edit-note" type="submit" name="action" value="EditNote" class="bottom-panel-button"
-				asp-controller="Note" asp-action="GetValueFromListBox">
+		        asp-controller="Note" asp-action="GetValueFromListBox">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M3 7C3 4.79086 4.79086 3 7 3H17C19.2091 3 21 4.79086 21 7V17C21 19.2091
 						 19.2091 21 17 21H7C4.79086 21 3 19.2091 3 17V7Z" stroke="#000000" stroke-width="2"/>
@@ -77,7 +83,7 @@
 			</svg>
 		</button>
 		<button id="delete-note" type="submit" name="action" value="RemoveNote" class="bottom-panel-button"
-				asp-controller="Note" asp-action="GetValueFromListBox">
+		        asp-controller="Note" asp-action="GetValueFromListBox">
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8
 						 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21
@@ -95,26 +101,5 @@
 </form>
 
 @section Scripts {
-	<script>
-		$("#edit-note, #delete-note").click(function (e) {
-			var noteId = $("#notes-list-box").val();
-			if (noteId == 0) {
-				e.preventDefault();
-			}
-		});
-	</script>
-
-	<script>
-		$("#notes-list-box").on("change", function () {
-			var noteId = $("#notes-list-box").val();
-			$.ajax({
-				type: "Post",
-				url: "/Note/ShowNote?id=" + noteId,
-				contentType: "html",
-				success: function (response) {
-					$("#main-container").html(response);
-				}
-			});
-		});
-	</script>
+	<script src="~/js/index.js"></script>
 }

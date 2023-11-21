@@ -102,7 +102,7 @@ select {
     border-bottom: 1px solid rgb(192,192,192);
     grid-area: right-info;
     display: grid;
-    grid-template-columns: minmax(80px, 10%) 55% minmax(80px, 10%) auto;
+    grid-template-columns: minmax(80px, 10%) auto minmax(80px, 10%) 20%;
 }
 
 .note-info-category {
@@ -165,6 +165,7 @@ select {
     grid-area: listbox;
     margin: 0px;
     padding: 0px;
+    scrollbar-width: none;
     width: 100%;
 }
 
@@ -177,11 +178,16 @@ select {
     padding: 10px 0 10px 25px;
 }
 
+.left-listbox:focus option:checked {
+    background: darkgrey linear-gradient(0deg, darkgrey 0%, darkgrey 100%);
+}
+
 .right-read-content-box {
     border-bottom: 1px solid rgb(192,192,192);
     grid-area: content;
-    overflow-y: hidden;
+    overflow-x: hidden;
     scrollbar-width: thin;
+    word-break: break-word;
 }
 
 .title-input {
@@ -199,6 +205,8 @@ select {
     border: 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
+    height: 100%;
+    overflow: hidden;
     resize: none;
     margin: 25px;
     padding: 0px;
@@ -301,9 +309,30 @@ a:hover {
     border-radius: 10px;
     display: inline-block;
     font-size: 25px;
-    margin: 0 25px 25px 25px;
+    margin: 0 25px 10px 25px;
     padding: 10px;
     width: 800px;
+}
+
+.note-textbox-title.input-validation-error {
+    border: 2px solid rgb(235,93,93);
+}
+
+.note-textbox-title.valid {
+    border: 1px solid rgb(192,192,192);
+}
+
+.note-textbox-title:focus {
+    outline: none;
+    border: 2px solid grey;
+}
+
+.title-error-message-box {
+    margin-left: 25px;
+}
+
+.title-error-message {
+    color: rgb(235,93,93);
 }
 
 .note-textbox-content {
@@ -311,11 +340,25 @@ a:hover {
     border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
-    height: 60vh;
+    height: 59vh;
     margin-left: 25px;
+    margin-top: 10px;
     padding: 10px;
     resize: none;
     width: 96%;
+}
+
+.note-textbox-content.input-validation-error {
+    border: 2px solid rgb(235,93,93);
+}
+
+note-textbox-content.valid {
+    border: 1px solid rgb(192,192,192);
+}
+
+.note-textbox-content:focus {
+outline: none;
+border: 2px solid rgb(75,75,75);
 }
 
 .accept-cancel-bottom-panel {

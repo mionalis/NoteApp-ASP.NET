@@ -7,6 +7,10 @@
 	        class="textboxes-select"></select>
 </div>
 
-<textarea asp-for="Content" type="text" class="note-textbox-content"> oninput='this.style.height = "";
-	this.style.height = this.scrollHeight + "px"'></textarea>
+<div class="title-error-message-box">
+	<span asp-validation-for="Title" class="title-error-message"></span>
+	<span asp-validation-for="Content" class="title-error-message"></span>
+</div>
 
+<textarea asp-for="Content" type="text" class="note-textbox-content"> 
+	oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"'></textarea>

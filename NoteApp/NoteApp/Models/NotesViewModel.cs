@@ -23,6 +23,12 @@ namespace NoteApp.Models
 		public int ID { get; set; }
 
 		/// <summary>
+		/// Возвращает и задает ID категории заметки. Используется для установки выбранного значения
+		/// в ComboBox.
+		/// </summary>
+		public int CategoryID { get; set; }
+
+		/// <summary>
 		/// Возвращает и задает текущую заметку, выбранную в NotesListBox.
 		/// </summary>
 		[BindProperty(Name = "NotesListBox")]

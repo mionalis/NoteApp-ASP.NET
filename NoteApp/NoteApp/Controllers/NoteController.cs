@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NoteApp.Models;
+using NoteApp.Services;
 
 namespace NoteApp.Controllers
 {
@@ -10,6 +12,11 @@ namespace NoteApp.Controllers
 	/// </summary>
 	public class NoteController : Controller
 	{
+		/// <summary>
+		/// Выбрана ли категория в ComboBox для фильтрации заметок в NotesListBox.
+		/// </summary>
+		private static bool _isFiltering;
+
 		/// <summary>
 		/// Oбъект ILogger, необходимый для логгирования данных.
 		/// </summary>
@@ -44,13 +51,28 @@ namespace NoteApp.Controllers
 		[HttpGet]
 		public IActionResult Index(int id)
 		{
-			if (id != 0)
+			if (id == 0)
 			{
-				var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
-				_notesViewModel.SelectedNote = selectedNote;
+				// Установить выбранным в ComboBox элемент "All".
+				_notesViewModel.CategoryID = -1;
+				GetNotesSelectListItems();
+				return View(_notesViewModel);
 			}
 
-			GetNotesSelectListItems();
+			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
+			_notesViewModel.SelectedNote = selectedNote;
+
+			if (_isFiltering)
+			{
+				GetFilteredSelectListItems(selectedNote.Category);
+				_notesViewModel.CategoryID = (int) selectedNote.Category;
+			}
+			else
+			{
+				_notesViewModel.CategoryID = -1;
+				GetNotesSelectListItems();
+			}
+
 			return View(_notesViewModel);
 		}
 
@@ -65,7 +87,13 @@ namespace NoteApp.Controllers
 			var selectedNote = _noteDbContext.Notes.FirstOrDefault(note => note.ID == id);
 			_notesViewModel.SelectedNote = selectedNote;
 
-			GetNotesSelectListItems();
+			if (!_isFiltering)
+			{
+				GetNotesSelectListItems();
+				return View("Index", _notesViewModel);
+			}
+
+			GetFilteredSelectListItems(selectedNote.Category);
 			return View("Index", _notesViewModel);
 		}
 
@@ -87,7 +115,32 @@ namespace NoteApp.Controllers
         {
 			var note = new Note();
 			ViewBag.Message = "Add Note";
+			_isFiltering = false;
 			return View("AddEditNote", note);
+		}
+
+		/// <summary>
+		/// Производит фильтрацию заметок в NotesListBox согласно выбранной категории. 
+		/// </summary>
+		/// <param name="id">ID выбранной категории заметки.</param>
+		/// <returns>Главная страница.</returns>
+		[HttpPost]
+		public IActionResult FilterNotes(int id)
+		{
+			// Если в ComboBox выбрано "All".
+			if (id == -1)
+			{
+				_isFiltering = false;
+				GetNotesSelectListItems();
+
+				return View("Index", _notesViewModel); 
+			}
+
+			_isFiltering = true;
+			var noteCategory = (NoteCategory) id;
+			GetFilteredSelectListItems(noteCategory);
+
+			return View("Index", _notesViewModel);
 		}
 
 		/// <summary>
@@ -98,6 +151,15 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult AddNote(Note note)
 		{
+			var noteValidator = Validator.ValidateNote(note);
+
+			if (noteValidator.HasError)
+			{
+				ModelState.AddModelError("Title", noteValidator.ErrorMessage);
+				ViewBag.Message = "Add Note";
+				return View("AddEditNote", note);
+			}
+
 			_noteDbContext.Notes.Add(note);
 			_noteDbContext.SaveChanges();
 
@@ -151,6 +213,25 @@ namespace NoteApp.Controllers
 		[HttpPost]
 		public IActionResult EditNote(Note note)
 		{
+			var oldNote = _noteDbContext.Notes.AsNoTracking().FirstOrDefault(
+				oldNote => oldNote.ID == note.ID);
+
+			if (oldNote.Title == note.Title &&
+			    oldNote.Content == note.Content &&
+			    oldNote.Category == note.Category)
+			{
+				return RedirectToAction("Index", new { id = note.ID });
+			}
+
+			var noteValidator = Validator.ValidateNote(note);
+
+			if (noteValidator.HasError)
+			{
+				ModelState.AddModelError("Title", noteValidator.ErrorMessage);
+				ViewBag.Message = "Edit Note";
+				return View("AddEditNote", note);
+			}
+
 			_noteDbContext.Notes.Update(note);
 			_noteDbContext.Entry(note).Property(x => x.CreationTime).IsModified = false;
 			_noteDbContext.SaveChanges();
@@ -204,8 +285,11 @@ namespace NoteApp.Controllers
 		/// в NotesListBox.
 		/// </summary>
 		private void GetNotesSelectListItems()
-        {
-	        foreach (var note in _noteDbContext.Notes)
+		{
+			var sortedNotes =
+				_noteDbContext.Notes.OrderByDescending(x => x.LastModifiedTime).ToList();
+
+			foreach (var note in sortedNotes)
 	        {
 		        var selectList = new SelectListItem()
 		        {
@@ -216,5 +300,30 @@ namespace NoteApp.Controllers
 		        _notesViewModel.NotesSelectListItems.Add(selectList);
 	        }
         }
+
+		/// <summary>
+		/// Добавляет объекты из списка заметок, отфильтрованного по одной категории, в список
+		/// SelectListItem для их отображения в NotesListBox.
+		/// </summary>
+		/// <param name="category">Категория заметки.</param>
+		private void GetFilteredSelectListItems(NoteCategory category)
+		{
+			var filteredNotes = _noteDbContext.Notes.Where(
+				note => note.Category == category).ToList();
+
+			var sortedFilteredNotes = 
+				filteredNotes.OrderByDescending(p => p.LastModifiedTime);
+
+			foreach (var note in sortedFilteredNotes)
+			{
+				var selectList = new SelectListItem()
+				{
+					Text = note.Title,
+					Value = note.ID.ToString()
+				};
+
+				_notesViewModel.NotesSelectListItems.Add(selectList);
+			}
+		}
 	}
 }
