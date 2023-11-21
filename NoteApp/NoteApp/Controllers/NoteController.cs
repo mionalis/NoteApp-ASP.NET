@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NoteApp.Models;
 using NoteApp.Services;
 
@@ -274,8 +275,11 @@ namespace NoteApp.Controllers
 		/// в NotesListBox.
 		/// </summary>
 		private void GetNotesSelectListItems()
-        {
-	        foreach (var note in _noteDbContext.Notes)
+		{
+			var sortedNotes =
+				_noteDbContext.Notes.OrderByDescending(x => x.LastModifiedTime).ToList();
+
+			foreach (var note in sortedNotes)
 	        {
 		        var selectList = new SelectListItem()
 		        {
@@ -297,7 +301,10 @@ namespace NoteApp.Controllers
 			var filteredNotes = _noteDbContext.Notes.Where(
 				note => note.Category == category).ToList();
 
-			foreach (var note in filteredNotes)
+			var sortedFilteredNotes = 
+				filteredNotes.OrderByDescending(p => p.LastModifiedTime);
+
+			foreach (var note in sortedFilteredNotes)
 			{
 				var selectList = new SelectListItem()
 				{
