@@ -14,8 +14,7 @@ $("#notes-list-box").on("change", function () {
 		contentType: "html",
 		success: function (response) {
 			$("#main-container").html(response);
-			sc
-			$("#note-category-combo-box").val(categoryId);
+            $("#note-category-combo-box").val(categoryId);
 		}
 	});
 });
