@@ -15,7 +15,7 @@ namespace NoteApp.Services
 		/// <param name="note">Валидируемая заметка.</param>
 		/// <returns>Кортеж с результатом валидации (True, если ошибка, False - если нет) и
 		/// сообщением об ошибке.</returns>
-		public static (bool, string) ValidateNote(Note note)
+		public static (bool HasError, string ErrorMessage) ValidateNote(Note note)
         {
             if (string.IsNullOrEmpty(note.Title) && note.Title.Length > 50)
             {
